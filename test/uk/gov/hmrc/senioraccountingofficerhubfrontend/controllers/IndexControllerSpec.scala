@@ -14,29 +14,38 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend.config
+package uk.gov.hmrc.senioraccountingofficerhubfrontend.controllers
 
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.Application
+import play.api.http.Status
+import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
+import play.api.test.Helpers.*
 import uk.gov.hmrc.senioraccountingofficerhubfrontend.base.SpecBase
+import uk.gov.hmrc.senioraccountingofficerhubfrontend.controllers.actions.*
 
-class ErrorHandlerSpec extends SpecBase {
-
+class IndexControllerSpec extends SpecBase {
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
+      .overrides(bind[IdentifierAction].to[FakeIdentifierAction])
       .build()
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val handler = app.injector.instanceOf[ErrorHandler]
+  private val controller = app.injector.instanceOf[IndexController]
 
-  "standardErrorTemplate" must {
-    "render HTML" in {
-      val html = handler.standardErrorTemplate("title", "heading", "message")(fakeRequest).futureValue
-      html.contentType mustBe "text/html"
+  "GET /" must {
+    "return 200" in {
+      val result = controller.onPageLoad()(fakeRequest)
+      status(result) mustBe Status.OK
+    }
+
+    "return HTML" in {
+      val result = controller.onPageLoad()(fakeRequest)
+      contentType(result) mustBe Some("text/html")
+      charset(result) mustBe Some("utf-8")
     }
   }
-
 }

@@ -20,5 +20,7 @@ object AppDependencies {
     "org.jsoup"          % "jsoup"                   % "1.20.1"         % Test
   )
 
-  val it: Seq[ModuleID] = Seq.empty
+  val it: Seq[ModuleID] = Seq(
+    "com.github.tomakehurst" % "wiremock-jre8" % "3.0.1" % Test
+  )
 }

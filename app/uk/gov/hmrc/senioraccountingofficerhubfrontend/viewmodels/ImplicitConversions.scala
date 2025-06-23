@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(layout: templates.Layout)
+package uk.gov.hmrc.senioraccountingofficerhubfrontend.viewmodels
 
-@()(implicit request: RequestHeader, messages: Messages)
+import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
 
-@layout(pageTitle = "senior-accounting-officer-hub-frontend") {
-    <h1 class="govuk-heading-xl">senior-accounting-officer-hub-frontend</h1>
-    <p class="govuk-body">@{messages("service.text")}</p>
-}
+import scala.language.implicitConversions
 
-@{
-    //$COVERAGE-OFF$
+object implicits extends ImplicitConversions
+
+trait ImplicitConversions {
+
+  implicit def stringToText(string: String)(implicit messages: Messages): Text =
+    Text(messages(string))
+
+  implicit def stringToKey(string: String)(implicit messages: Messages): Key =
+    Key(content = Text(messages(string)))
 }

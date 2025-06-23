@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(layout: templates.Layout)
+package uk.gov.hmrc.senioraccountingofficerhubfrontend.models.requests
 
-@()(implicit request: RequestHeader, messages: Messages)
+import play.api.mvc.{Request, WrappedRequest}
 
-@layout(pageTitle = "senior-accounting-officer-hub-frontend") {
-    <h1 class="govuk-heading-xl">senior-accounting-officer-hub-frontend</h1>
-    <p class="govuk-body">@{messages("service.text")}</p>
-}
-
-@{
-    //$COVERAGE-OFF$
-}
+final case class IdentifierRequest[A](request: Request[A], userId: String) extends WrappedRequest[A](request)
