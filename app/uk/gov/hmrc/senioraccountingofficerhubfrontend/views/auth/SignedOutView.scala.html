@@ -14,24 +14,27 @@
  * limitations under the License.
  *@
 
-@import uk.gov.hmrc.senioraccountingofficerhubfrontend.config.AppConfig
-@import uk.gov.hmrc.hmrcfrontend.views.html.helpers.HmrcStandardPage
-@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.hmrcstandardpage.HmrcStandardPageParams
-
 @this(
-  appConfig: AppConfig,
-  hmrcStandardPage: HmrcStandardPage
+    layout: templates.Layout,
+    govukButton: GovukButton
 )
 
-@(pageTitle: Option[String] = None)(contentBlock: Html)(implicit request: RequestHeader, messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
-@hmrcStandardPage(
-  HmrcStandardPageParams(
-    pageTitle = pageTitle,
-    isWelshTranslationAvailable = appConfig.welshLanguageSupportEnabled
-  )
-)(contentBlock)
+@layout(
+    pageTitle    = titleNoForm(messages("signedOut.title")),
+    showBackLink = false,
+    showSignOut  = false
+) {
 
-@{
-    //$COVERAGE-OFF$
+    <h1 class="govuk-heading-xl">@messages("signedOut.heading")</h1>
+
+    <p class="govuk-body">@messages("signedOut.guidance")</p>
+
+    <p class="govuk-body">
+        @govukButton(
+            ButtonViewModel(messages("site.signIn"))
+                .asLink(routes.IndexController.onPageLoad().url)
+        )
+    </p>
 }

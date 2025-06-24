@@ -16,18 +16,20 @@
 
 package uk.gov.hmrc.senioraccountingofficerhubfrontend.controllers
 
-import uk.gov.hmrc.senioraccountingofficerhubfrontend.views.html.HelloWorldPage
-import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
+import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import javax.inject.{Inject, Singleton}
-import scala.concurrent.Future
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import uk.gov.hmrc.senioraccountingofficerhubfrontend.views.html.UnauthorisedView
 
-@Singleton
-class HelloWorldController @Inject() (mcc: MessagesControllerComponents, helloWorldPage: HelloWorldPage)
-    extends FrontendController(mcc) {
+import javax.inject.Inject
 
-  val helloWorld: Action[AnyContent] = Action.async { implicit request =>
-    Future.successful(Ok(helloWorldPage()))
+class UnauthorisedController @Inject() (
+    val controllerComponents: MessagesControllerComponents,
+    view: UnauthorisedView
+) extends FrontendBaseController
+    with I18nSupport {
+
+  def onPageLoad(): Action[AnyContent] = Action { implicit request =>
+    Ok(view())
   }
-
 }

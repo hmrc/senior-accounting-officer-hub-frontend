@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,24 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(layout: templates.Layout)
+package uk.gov.hmrc.senioraccountingofficerhubfrontend.viewmodels
 
-@()(implicit request: RequestHeader, messages: Messages)
+package object govuk {
 
-@layout(pageTitle = "senior-accounting-officer-hub-frontend") {
-    <h1 class="govuk-heading-xl">senior-accounting-officer-hub-frontend</h1>
-    <p class="govuk-body">@{messages("service.text")}</p>
-}
-
-@{
-    //$COVERAGE-OFF$
+  object all
+      extends ImplicitConversions
+      with BackLinkFluency
+      with ButtonFluency
+      with CheckboxFluency
+      with DateFluency
+      with ErrorSummaryFluency
+      with FieldsetFluency
+      with HintFluency
+      with InputFluency
+      with LabelFluency
+      with RadiosFluency
+      with SummaryListFluency
+      with TagFluency
 }

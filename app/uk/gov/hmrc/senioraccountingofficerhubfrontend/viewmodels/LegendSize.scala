@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,17 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(layout: templates.Layout)
+package uk.gov.hmrc.senioraccountingofficerhubfrontend.viewmodels
 
-@()(implicit request: RequestHeader, messages: Messages)
+sealed trait LegendSize
 
-@layout(pageTitle = "senior-accounting-officer-hub-frontend") {
-    <h1 class="govuk-heading-xl">senior-accounting-officer-hub-frontend</h1>
-    <p class="govuk-body">@{messages("service.text")}</p>
-}
-
-@{
-    //$COVERAGE-OFF$
+object LegendSize {
+  case object ExtraLarge extends WithCssClass("govuk-fieldset__legend--xl") with LegendSize
+  case object Large      extends WithCssClass("govuk-fieldset__legend--l") with LegendSize
+  case object Medium     extends WithCssClass("govuk-fieldset__legend--m") with LegendSize
+  case object Small      extends WithCssClass("govuk-fieldset__legend--s") with LegendSize
 }

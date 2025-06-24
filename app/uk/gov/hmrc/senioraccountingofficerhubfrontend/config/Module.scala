@@ -17,10 +17,13 @@
 package uk.gov.hmrc.senioraccountingofficerhubfrontend.config
 
 import com.google.inject.AbstractModule
+import uk.gov.hmrc.senioraccountingofficerhubfrontend.controllers.actions.*
 
 class Module extends AbstractModule {
 
   override def configure(): Unit = {
+
+    bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
 
     bind(classOf[AppConfig]).asEagerSingleton()
   }

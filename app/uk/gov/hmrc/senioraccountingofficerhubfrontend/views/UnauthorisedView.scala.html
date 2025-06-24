@@ -14,15 +14,17 @@
  * limitations under the License.
  *@
 
-@this(layout: templates.Layout)
+@this(
+    layout: templates.Layout
+)
 
-@()(implicit request: RequestHeader, messages: Messages)
+@()(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = "senior-accounting-officer-hub-frontend") {
-    <h1 class="govuk-heading-xl">senior-accounting-officer-hub-frontend</h1>
-    <p class="govuk-body">@{messages("service.text")}</p>
-}
+@layout(
+    pageTitle = titleNoForm(messages("unauthorised.title"))
+) {
 
-@{
-    //$COVERAGE-OFF$
+    <h1 class="govuk-heading-xl">@messages("unauthorised.heading")</h1>
+
+    <p class="govuk-body">@messages("unauthorised.guidance")</p>
 }
