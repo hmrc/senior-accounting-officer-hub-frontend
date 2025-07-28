@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,15 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(
-layout: templates.Layout,
-govukButton: GovukButton
-)
+package uk.gov.hmrc.senioraccountingofficerhubfrontend.viewmodels
 
-@(continueUrl: String)(implicit request: Request[_], messages: Messages)
+sealed trait LegendSize
 
-@layout(pageTitle = titleNoForm(messages("journeyRecovery.continue.title"))) {
-
-<h1 class="govuk-heading-xl">@messages("journeyRecovery.continue.heading")</h1>
-
-<p class="govuk-body">@messages("journeyRecovery.continue.guidance")</p>
-
-<p class="govuk-body">
-    @govukButton(
-    ButtonViewModel(messages("site.continue"))
-    .asLink(continueUrl)
-    )
-</p>
+object LegendSize {
+  case object ExtraLarge extends WithCssClass("govuk-fieldset__legend--xl") with LegendSize
+  case object Large      extends WithCssClass("govuk-fieldset__legend--l") with LegendSize
+  case object Medium     extends WithCssClass("govuk-fieldset__legend--m") with LegendSize
+  case object Small      extends WithCssClass("govuk-fieldset__legend--s") with LegendSize
 }

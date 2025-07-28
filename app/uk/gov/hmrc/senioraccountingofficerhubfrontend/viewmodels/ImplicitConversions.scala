@@ -1,4 +1,4 @@
-@*
+/*
  * Copyright 2025 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,25 +12,23 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *@
+ */
 
-@this(
-layout: templates.Layout,
-govukButton: GovukButton
-)
+package uk.gov.hmrc.senioraccountingofficerhubfrontend.viewmodels
 
-@(continueUrl: String)(implicit request: Request[_], messages: Messages)
+import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
 
-@layout(pageTitle = titleNoForm(messages("journeyRecovery.continue.title"))) {
+import scala.language.implicitConversions
 
-<h1 class="govuk-heading-xl">@messages("journeyRecovery.continue.heading")</h1>
+object implicits extends ImplicitConversions
 
-<p class="govuk-body">@messages("journeyRecovery.continue.guidance")</p>
+trait ImplicitConversions {
 
-<p class="govuk-body">
-    @govukButton(
-    ButtonViewModel(messages("site.continue"))
-    .asLink(continueUrl)
-    )
-</p>
+  implicit def stringToText(string: String)(implicit messages: Messages): Text =
+    Text(messages(string))
+
+  implicit def stringToKey(string: String)(implicit messages: Messages): Key =
+    Key(content = Text(messages(string)))
 }

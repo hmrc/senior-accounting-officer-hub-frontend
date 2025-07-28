@@ -14,29 +14,14 @@
  * limitations under the License.
  */
 
-import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
-import org.scalatest.matchers.should.Matchers
-import org.scalatest.wordspec.AnyWordSpec
-import org.scalatestplus.play.guice.GuiceOneServerPerSuite
-import play.api.Application
-import play.api.inject.guice.GuiceApplicationBuilder
-import play.api.libs.ws.WSClient
+package uk.gov.hmrc.senioraccountingofficerhubfrontend
 
-class HealthEndpointIntegrationSpec
-    extends AnyWordSpec
-    with Matchers
-    with ScalaFutures
-    with IntegrationPatience
-    with GuiceOneServerPerSuite {
+import play.api.http.Status
+import support.{ISpecBase, MockAuthHelper}
 
-  private val wsClient = app.injector.instanceOf[WSClient]
-  private val baseUrl  = s"http://localhost:$port"
+class HealthISpec extends ISpecBase {
 
-  override def fakeApplication(): Application =
-    GuiceApplicationBuilder()
-      .build()
-
-  "service health endpoint" should {
+  "service health endpoint" must {
     "respond with 200 status" in {
       val response =
         wsClient
@@ -44,7 +29,8 @@ class HealthEndpointIntegrationSpec
           .get()
           .futureValue
 
-      response.status shouldBe 200
+      response.status mustBe Status.OK
+      MockAuthHelper.verifyAuthWasCalled(times = 0)
     }
   }
 }
