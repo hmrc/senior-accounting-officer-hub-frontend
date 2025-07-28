@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend.support
+package support
 
 import play.api.http.SecretConfiguration
 import play.api.libs.crypto.DefaultCookieSigner

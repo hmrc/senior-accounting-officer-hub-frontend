@@ -23,4 +23,6 @@ object AppDependencies {
   val it: Seq[ModuleID] = Seq(
     "com.github.tomakehurst" % "wiremock-jre8" % "3.0.1" % Test
   )
+
+  def apply(): Seq[ModuleID] = compile ++ test
 }

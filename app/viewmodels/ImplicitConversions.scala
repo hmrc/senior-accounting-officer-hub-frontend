@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend
+package viewmodels
 
-import play.api.http.Status
-import support.{ISpecBase, MockAuthHelper}
+import play.api.i18n.Messages
+import uk.gov.hmrc.govukfrontend.views.viewmodels.content.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.Key
 
-class HealthISpec extends ISpecBase {
+import scala.language.implicitConversions
 
-  "service health endpoint" must {
-    "respond with 200 status" in {
-      val response =
-        wsClient
-          .url(s"$baseUrl/ping/ping")
-          .get()
-          .futureValue
+object implicits extends ImplicitConversions
 
-      response.status mustBe Status.OK
-      MockAuthHelper.verifyAuthWasCalled(times = 0)
-    }
-  }
+trait ImplicitConversions {
+
+  implicit def stringToText(string: String)(implicit messages: Messages): Text =
+    Text(messages(string))
+
+  implicit def stringToKey(string: String)(implicit messages: Messages): Key =
+    Key(content = Text(messages(string)))
 }

@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend
+package controllers.auth
 
-import play.api.http.Status
-import support.{ISpecBase, MockAuthHelper}
+import javax.inject.Inject
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import views.html.auth.SignedOutView
 
-class HealthISpec extends ISpecBase {
+class SignedOutController @Inject() (
+    val controllerComponents: MessagesControllerComponents,
+    view: SignedOutView
+) extends FrontendBaseController
+    with I18nSupport {
 
-  "service health endpoint" must {
-    "respond with 200 status" in {
-      val response =
-        wsClient
-          .url(s"$baseUrl/ping/ping")
-          .get()
-          .futureValue
-
-      response.status mustBe Status.OK
-      MockAuthHelper.verifyAuthWasCalled(times = 0)
-    }
+  def onPageLoad(): Action[AnyContent] = Action { implicit request =>
+    Ok(view())
   }
 }
