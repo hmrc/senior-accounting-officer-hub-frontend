@@ -17,7 +17,6 @@
 package controllers
 
 import base.SpecBase
-import controllers.IndexController
 import controllers.actions.{FakeIdentifierAction, IdentifierAction}
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.Application
@@ -26,7 +25,6 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import controllers.actions.*
 
 class IndexControllerSpec extends SpecBase {
   override def fakeApplication(): Application =

@@ -17,7 +17,6 @@
 package config
 
 import base.SpecBase
-import config.ErrorHandler
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder

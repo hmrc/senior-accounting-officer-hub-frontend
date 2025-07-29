@@ -16,7 +16,6 @@
 
 package controllers.actions
 
-import controllers.actions.IdentifierAction
 import play.api.mvc.*
 import requests.IdentifierRequest
 

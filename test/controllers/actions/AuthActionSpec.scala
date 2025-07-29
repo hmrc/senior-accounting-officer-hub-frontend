@@ -18,7 +18,6 @@ package controllers.actions
 
 import base.SpecBase
 import config.AppConfig
-import controllers.actions.{AuthenticatedIdentifierAction, IdentifierAction}
 import controllers.routes
 import play.api.mvc.{Action, AnyContent, BodyParsers, Results}
 import play.api.test.FakeRequest
