@@ -8,7 +8,7 @@ ThisBuild / scalaVersion := "3.3.6"
 
 lazy val microservice = (project in file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
-  .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
+  .disablePlugins(JUnitXmlReportPlugin) // Required to prevent https://github.com/scalatest/scalatest/issues/1427
   .settings(ThisBuild / useSuperShell := false)
   .settings(
     name := appName,
@@ -28,19 +28,13 @@ lazy val microservice = (project in file("."))
       "viewmodels.govuk.all.*",
       "viewmodels.*"
     ),
-    scalacOptions ++= Seq(
-      "-feature",
-      "-Wconf:cat=deprecation:ws,cat=feature:ws,cat=optimizer:ws,src=target/.*:s",
-      "-Wconf:cat=unused-imports&src=html/.*:s",
-      "-Wconf:src=routes/.*:s",
-    ),
     libraryDependencies ++= AppDependencies(),
-    retrieveManaged := true,
-    pipelineStages := Seq(digest, gzip),
-    Assets / pipelineStages := Seq(concat),
+    retrieveManaged          := true,
+    pipelineStages           := Seq(digest, gzip),
+    Assets / pipelineStages  := Seq(concat),
     PlayKeys.playDefaultPort := 10056
   )
-  .settings(CodeCoverageSettings.settings*)
+  .settings(CodeCoverageSettings.settings *)
 
 lazy val it =
   (project in file("it"))
