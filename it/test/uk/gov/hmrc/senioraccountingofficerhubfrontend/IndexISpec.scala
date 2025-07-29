@@ -18,9 +18,9 @@ package uk.gov.hmrc.senioraccountingofficerhubfrontend
 
 import org.jsoup.Jsoup
 import play.api.http.{HeaderNames, Status}
-import uk.gov.hmrc.senioraccountingofficerhubfrontend.config.AppConfig
-import uk.gov.hmrc.senioraccountingofficerhubfrontend.support.{ISpecBase, MockAuthHelper, SessionCookieBaker}
+import support.{ISpecBase, MockAuthHelper, SessionCookieBaker}
 import MockAuthHelper.authSession
+import config.AppConfig
 
 class IndexISpec extends ISpecBase {
   

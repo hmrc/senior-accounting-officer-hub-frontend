@@ -14,23 +14,8 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend
+package requests
 
-import play.api.http.Status
-import support.{ISpecBase, MockAuthHelper}
+import play.api.mvc.{Request, WrappedRequest}
 
-class HealthISpec extends ISpecBase {
-
-  "service health endpoint" must {
-    "respond with 200 status" in {
-      val response =
-        wsClient
-          .url(s"$baseUrl/ping/ping")
-          .get()
-          .futureValue
-
-      response.status mustBe Status.OK
-      MockAuthHelper.verifyAuthWasCalled(times = 0)
-    }
-  }
-}
+final case class IdentifierRequest[A](request: Request[A], userId: String) extends WrappedRequest[A](request)
