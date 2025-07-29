@@ -1,7 +1,5 @@
 import play.sbt.routes.RoutesKeys
-import sbt.Def
 import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
-
 
 lazy val appName: String = "senior-accounting-officer-hub-frontend"
 
@@ -11,7 +9,6 @@ ThisBuild / scalaVersion := "3.3.6"
 lazy val microservice = (project in file("."))
   .enablePlugins(PlayScala, SbtDistributablesPlugin)
   .disablePlugins(JUnitXmlReportPlugin) //Required to prevent https://github.com/scalatest/scalatest/issues/1427
-  .settings(inConfig(Test)(testSettings)*)
   .settings(ThisBuild / useSuperShell := false)
   .settings(
     name := appName,
@@ -33,20 +30,17 @@ lazy val microservice = (project in file("."))
     ),
     scalacOptions ++= Seq(
       "-feature",
-      "-Wconf:cat=deprecation:ws,cat=feature:ws,cat=optimizer:ws,src=target/.*:s"
+      "-Wconf:cat=deprecation:ws,cat=feature:ws,cat=optimizer:ws,src=target/.*:s",
+      "-Wconf:cat=unused-imports&src=html/.*:s",
+      "-Wconf:src=routes/.*:s",
     ),
     libraryDependencies ++= AppDependencies(),
     retrieveManaged := true,
-    pipelineStages := Seq(digest),
+    pipelineStages := Seq(digest, gzip),
     Assets / pipelineStages := Seq(concat),
     PlayKeys.playDefaultPort := 10056
   )
   .settings(CodeCoverageSettings.settings*)
-
-lazy val testSettings: Seq[Def.Setting[_]] = Seq(
-  fork := true,
-  unmanagedSourceDirectories += baseDirectory.value / "test-utils"
-)
 
 lazy val it =
   (project in file("it"))
