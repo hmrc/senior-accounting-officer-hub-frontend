@@ -25,107 +25,107 @@
   certificationDetails: CertificationDetails
 )(implicit request: RequestHeader, messages: Messages)
 
-@layout(pageTitle = titleNoForm(messages("hub.title"))) {
+@layout(pageTitle = titleNoForm(messages("hub.dashboard.title"))) {
 
-     <h1 class="govuk-heading-l">@messages("hub.heading")</h1>
+     <h1 class="govuk-heading-l">@messages("hub.dashboard.heading")</h1>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.companyNameLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.companyNameLabel")</dt>
        <dd class="govuk-summary-list__actions">@companyDetails.companyName</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.referenceIdLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.referenceIdLabel")</dt>
        <dd class="govuk-summary-list__actions">@companyDetails.referenceId</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.accountingPeriodLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.accountingPeriodLabel")</dt>
        <dd class="govuk-summary-list__actions">
         @companyDetails.accountingPeriodStartDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))
-         @messages("hub.strTo")
+         @messages("hub.dashboard.strTo")
         @companyDetails.accountingPeriodEndDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))
        </dd>
       </div>
      </dl>
 
      <p class="govuk-body">
-      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.link1Text")</a>
+      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link1Text")</a>
      </p>
 
 
-     <h2 class="govuk-heading-m">@messages("hub.subHeading1")</h2>
+     <h2 class="govuk-heading-m">@messages("hub.dashboard.subHeading1")</h2>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.statusLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.statusLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <strong class="govuk-tag govuk-tag--red">@messages("hub.strDue")</strong>
+        <strong class="govuk-tag govuk-tag--red">@messages("hub.dashboard.strDue")</strong>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dueDateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.dueDateLabel")</dt>
        <dd class="govuk-summary-list__actions">@notificationDetails.dueDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.templateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateLabel")</dt>
 
        <dd class="govuk-summary-list__actions">
         <a class="govuk-link" href="public/templates/sao_notification_template.csv">
-         @messages("hub.strDownload")
-         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText1")</span></a>
+         @messages("hub.dashboard.strDownload")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText1")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.templateGuidanceLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateGuidanceLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.strRead")
-         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText2")</span></a>
+        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.dashboard.strRead")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText2")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.submissionHistoryLabel")</dt>
-       <dd class="govuk-summary-list__actions">@messages("hub.strNotPresentYet")</dd>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.submissionHistoryLabel")</dt>
+       <dd class="govuk-summary-list__actions">@messages("hub.dashboard.strNotPresentYet")</dd>
       </div>
      </dl>
 
 
-     <h2 class="govuk-heading-m">@messages("hub.subHeading2")</h2>
+     <h2 class="govuk-heading-m">@messages("hub.dashboard.subHeading2")</h2>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.statusLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.statusLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <strong class="govuk-tag govuk-tag--red">@messages("hub.strDue")</strong>
+        <strong class="govuk-tag govuk-tag--red">@messages("hub.dashboard.strDue")</strong>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dueDateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.dueDateLabel")</dt>
        <dd class="govuk-summary-list__actions">@certificationDetails.dueDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.templateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateLabel")</dt>
 
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="public/templates/sao_notification_template.csv">@messages("hub.strDownload")
-         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText3")</span></a>
+        <a class="govuk-link" href="public/templates/sao_notification_template.csv">@messages("hub.dashboard.strDownload")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText3")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.templateGuidanceLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateGuidanceLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.strRead")
-         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText4")</span></a>
+        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.dashboard.strRead")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText4")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.submissionHistoryLabel")</dt>
-       <dd class="govuk-summary-list__actions">@messages("hub.strNotPresentYet")</dd>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.submissionHistoryLabel")</dt>
+       <dd class="govuk-summary-list__actions">@messages("hub.dashboard.strNotPresentYet")</dd>
       </div>
      </dl>
 
 
      <p class="govuk-body">
-      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.link2Text")</a>
+      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link2Text")</a>
      </p>
      <p class="govuk-body">
-      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.link3Text")</a>
+      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link3Text")</a>
      </p>
 
 }
