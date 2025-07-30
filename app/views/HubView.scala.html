@@ -57,7 +57,7 @@
       <div class="govuk-summary-list__row">
        <dt class="govuk-summary-list__key">@messages("hub.statusLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <strong class="govuk-tag govuk-tag--red">DUE</strong>
+        <strong class="govuk-tag govuk-tag--red">@messages("hub.strDue")</strong>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -68,18 +68,21 @@
        <dt class="govuk-summary-list__key">@messages("hub.templateLabel")</dt>
 
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="public/templates/sao_notification_template.csv">Download<span class="govuk-visually-hidden"> the notification template</span></a>
+        <a class="govuk-link" href="public/templates/sao_notification_template.csv">
+         @messages("hub.strDownload")
+         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText1")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
        <dt class="govuk-summary-list__key">@messages("hub.templateGuidanceLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="notification/notification-template-guide.html">Read<span class="govuk-visually-hidden"> the notification template guidance</span></a>
+        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.strRead")
+         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText2")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
        <dt class="govuk-summary-list__key">@messages("hub.submissionHistoryLabel")</dt>
-       <dd class="govuk-summary-list__actions">Not present yet</dd>
+       <dd class="govuk-summary-list__actions">@messages("hub.strNotPresentYet")</dd>
       </div>
      </dl>
 
@@ -89,7 +92,7 @@
       <div class="govuk-summary-list__row">
        <dt class="govuk-summary-list__key">@messages("hub.statusLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <strong class="govuk-tag govuk-tag--red">DUE</strong>
+        <strong class="govuk-tag govuk-tag--red">@messages("hub.strDue")</strong>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
@@ -100,18 +103,20 @@
        <dt class="govuk-summary-list__key">@messages("hub.templateLabel")</dt>
 
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="public/templates/sao_notification_template.csv">Download<span class="govuk-visually-hidden"> the notification template</span></a>
+        <a class="govuk-link" href="public/templates/sao_notification_template.csv">@messages("hub.strDownload")
+         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText3")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
        <dt class="govuk-summary-list__key">@messages("hub.templateGuidanceLabel")</dt>
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="notification/notification-template-guide.html">Read<span class="govuk-visually-hidden"> the notification template guidance</span></a>
+        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.strRead")
+         <span class="govuk-visually-hidden"> @messages("hub.strHiddenText4")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
        <dt class="govuk-summary-list__key">@messages("hub.submissionHistoryLabel")</dt>
-       <dd class="govuk-summary-list__actions">Not present yet</dd>
+       <dd class="govuk-summary-list__actions">@messages("hub.strNotPresentYet")</dd>
       </div>
      </dl>
 

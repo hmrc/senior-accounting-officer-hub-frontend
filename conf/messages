@@ -16,3 +16,12 @@ hub.link1Text = Submit a notification
 hub.link2Text = Manage contact details
 hub.link3Text = Manage company details
 hub.strTo = to
+hub.strNotPresentYet = Not present yet
+hub.strDownload = Download
+hub.strRead = Read
+hub.strDue = DUE
+hub.strHiddenText1 = the notification template
+hub.strHiddenText2 = the notification template guidance
+hub.strHiddenText3 = the certification template
+hub.strHiddenText4 = the certification template guidance
+
