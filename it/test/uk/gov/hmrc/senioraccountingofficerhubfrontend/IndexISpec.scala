@@ -23,9 +23,9 @@ import MockAuthHelper.authSession
 import config.AppConfig
 
 class IndexISpec extends ISpecBase {
-  
-  val appConfig   = app.injector.instanceOf[AppConfig]
-  val targetUrl   = s"$baseUrl/senior-accounting-officer"
+
+  val appConfig = app.injector.instanceOf[AppConfig]
+  val targetUrl = s"$baseUrl/senior-accounting-officer"
 
   "Index endpoint" must {
     "respond with a 200" in {
@@ -45,7 +45,7 @@ class IndexISpec extends ISpecBase {
       response.status mustBe Status.OK
       Option(
         Jsoup.parse(response.body).selectFirst("h1").text
-      ).get mustBe "senior-accounting-officer-hub-frontend"
+      ).get mustBe "Senior Accounting Officer notification and certificate account"
     }
   }
 

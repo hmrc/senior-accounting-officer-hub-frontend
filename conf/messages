@@ -1,2 +1,18 @@
 service.name = senior-accounting-officer-hub-frontend
-service.text = This is your new service
+hub.heading = Senior Accounting Officer notification and certificate account
+hub.companyNameLabel = Company name
+hub.referenceIdLabel = ReferenceID
+hub.accountingPeriodLabel = Accounting period
+hub.subHeading1 = Notification
+hub.subHeading2 = Certification
+
+hub.statusLabel = Status
+hub.dueDateLabel = Due date
+hub.templateLabel = Template
+hub.templateGuidanceLabel = Template guidance
+hub.submissionHistoryLabel = Submission history
+
+hub.link1Text = Submit a notification
+hub.link2Text = Manage contact details
+hub.link3Text = Manage company details
+hub.strTo = to

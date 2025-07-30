@@ -14,13 +14,115 @@
  * limitations under the License.
  *@
 
+@import models.{CompanyDetails,NotificationDetails,CertificationDetails}
+@import java.time.format.DateTimeFormatter
+
 @this(layout: templates.Layout)
 
-@()(implicit request: RequestHeader, messages: Messages)
+@(
+  companyDetails:CompanyDetails,
+  notificationDetails: NotificationDetails,
+  certificationDetails: CertificationDetails
+)(implicit request: RequestHeader, messages: Messages)
 
 @layout(pageTitle = "senior-accounting-officer-hub-frontend") {
-    <h1 class="govuk-heading-xl">senior-accounting-officer-hub-frontend</h1>
-    <p class="govuk-body">@{messages("service.text")}</p>
+
+     <h1 class="govuk-heading-l">@messages("hub.heading")</h1>
+     <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.companyNameLabel")</dt>
+       <dd class="govuk-summary-list__actions">@companyDetails.companyName</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.referenceIdLabel")</dt>
+       <dd class="govuk-summary-list__actions">@companyDetails.referenceId</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.accountingPeriodLabel")</dt>
+       <dd class="govuk-summary-list__actions">
+        @companyDetails.accountingPeriodStartDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))
+         @messages("hub.strTo")
+        @companyDetails.accountingPeriodEndDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))
+       </dd>
+      </div>
+     </dl>
+
+     <p class="govuk-body">
+      <a href="/beta/notification/submit-a-notification.html">@messages("hub.link1Text")</a>
+     </p>
+
+
+     <h2 class="govuk-heading-m">@messages("hub.subHeading1")</h2>
+     <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.statusLabel")</dt>
+       <dd class="govuk-summary-list__actions">
+        <strong class="govuk-tag govuk-tag--red">DUE</strong>
+       </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.dueDateLabel")</dt>
+       <dd class="govuk-summary-list__actions">@notificationDetails.dueDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.templateLabel")</dt>
+
+       <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="public/templates/sao_notification_template.csv">Download<span class="govuk-visually-hidden"> the notification template</span></a>
+       </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.templateGuidanceLabel")</dt>
+       <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="notification/notification-template-guide.html">Read<span class="govuk-visually-hidden"> the notification template guidance</span></a>
+       </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.submissionHistoryLabel")</dt>
+       <dd class="govuk-summary-list__actions">Not present yet</dd>
+      </div>
+     </dl>
+
+
+     <h2 class="govuk-heading-m">@messages("hub.subHeading2")</h2>
+     <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.statusLabel")</dt>
+       <dd class="govuk-summary-list__actions">
+        <strong class="govuk-tag govuk-tag--red">DUE</strong>
+       </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.dueDateLabel")</dt>
+       <dd class="govuk-summary-list__actions">@certificationDetails.dueDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.templateLabel")</dt>
+
+       <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="public/templates/sao_notification_template.csv">Download<span class="govuk-visually-hidden"> the notification template</span></a>
+       </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.templateGuidanceLabel")</dt>
+       <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href="notification/notification-template-guide.html">Read<span class="govuk-visually-hidden"> the notification template guidance</span></a>
+       </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+       <dt class="govuk-summary-list__key">@messages("hub.submissionHistoryLabel")</dt>
+       <dd class="govuk-summary-list__actions">Not present yet</dd>
+      </div>
+     </dl>
+
+
+     <p class="govuk-body">
+      <a href="/beta/notification/submit-a-notification.html">@messages("hub.link2Text")</a>
+     </p>
+     <p class="govuk-body">
+      <a href="/beta/notification/submit-a-notification.html">@messages("hub.link3Text")</a>
+     </p>
+
 }
 
 @{
