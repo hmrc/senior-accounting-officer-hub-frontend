@@ -1,4 +1,4 @@
-service.name = senior-accounting-officer-hub-frontend
+hub.title = Senior Accounting Officer notification and certificate account
 hub.heading = Senior Accounting Officer notification and certificate account
 hub.companyNameLabel = Company name
 hub.referenceIdLabel = ReferenceID
