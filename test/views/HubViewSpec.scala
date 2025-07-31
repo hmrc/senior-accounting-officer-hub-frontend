@@ -69,7 +69,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
     }
 
     "must have correct labels and values in company details section" in {
-      val section = mainContent.getElementById("section-companyDetails")
+      val section = mainContent.getElementById("section-company-details")
       val labels  = section.getElementsByClass("govuk-summary-list__key")
       val values  = section.getElementsByClass("govuk-summary-list__actions")
 
@@ -87,7 +87,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
     "must have correct linkText in submit notification link section" in {
       val sectionLink =
         mainContent
-          .getElementById("section-submitNotificationLink")
+          .getElementById("section-submit-notification-link")
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 1
       sectionLink.get(0).text() mustBe "Submit a notification"
@@ -146,7 +146,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
     "must have correct links and text in final link section" in {
       val sectionLink =
         mainContent
-          .getElementById("section-finalLinks")
+          .getElementById("section-final-links")
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 2
       sectionLink.get(0).text() mustBe "Manage contact details"
