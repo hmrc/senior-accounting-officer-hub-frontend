@@ -57,8 +57,8 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
   val doc = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
 
   "HubView" must {
-    "must generate a view with the correct heading and title" in {
 
+    "must generate a view with the correct heading and title" in {
       val mainContent = doc.getElementById("main-content")
       val h1          = mainContent.getElementsByTag("h1")
       h1.size() mustBe 1
@@ -66,66 +66,97 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       doc.title mustBe "Senior Accounting Officer notification and certificate account - senior-accounting-officer-hub-frontend - site.govuk"
     }
 
-    "must generate a view with the correct links texts" in {
-      val links = doc.getElementById("main-content").getElementsByClass("govuk-link")
-      links.size() mustBe 7
-      links.get(0).text() mustBe "Submit a notification"
-      links.get(1).text() mustBe "Download the notification template"
-      links.get(2).text() mustBe "Read the notification template guidance"
-      links.get(3).text() mustBe "Download the certification template"
-      links.get(4).text() mustBe "Read the certification template guidance"
-      links.get(5).text() mustBe "Manage contact details"
-      links.get(6).text() mustBe "Manage company details"
+    "must have correct correct number of sections" in {
+      val main     = doc.getElementById("main-content")
+      val sections = main.getElementsByAttributeValueContaining("id", "section")
+      sections.size() mustBe 5
     }
 
-    "must have correct h2 headings" in {
-      val headingsMedium = doc.getElementById("main-content").getElementsByClass("govuk-heading-m")
-      headingsMedium.size() mustBe 2
-      headingsMedium.get(0).text() mustBe "Notification"
-      headingsMedium.get(1).text() mustBe "Certification"
-    }
+    "must have correct labels and values in company details section" in {
+      val section = doc.getElementById("main-content").getElementById("section-CompanyDetails")
+      val labels  = section.getElementsByClass("govuk-summary-list__key")
+      val values  = section.getElementsByClass("govuk-summary-list__actions")
 
-    "must have the correct labels" in {
-      val labels = doc.getElementById("main-content").getElementsByClass("govuk-summary-list__key")
-      labels.size() mustBe 13
+      labels.size() mustBe 3
       labels.get(0).text() mustBe "Company name"
       labels.get(1).text() mustBe "ReferenceID"
       labels.get(2).text() mustBe "Accounting period"
-      labels.get(3).text() mustBe "Status"
-      labels.get(4).text() mustBe "Due date"
-      labels.get(5).text() mustBe "Template"
-      labels.get(6).text() mustBe "Template guidance"
-      labels.get(7).text() mustBe "Submission history"
-      labels.get(8).text() mustBe "Status"
-      labels.get(9).text() mustBe "Due date"
-      labels.get(10).text() mustBe "Template"
-      labels.get(11).text() mustBe "Template guidance"
-      labels.get(12).text() mustBe "Submission history"
+
+      values.size() mustBe 3
+      values.get(0).text() mustBe "Fake Company Ltd"
+      values.get(1).text() mustBe "fakexxx1234"
+      values.get(2).text() mustBe "30 July 2025 to 30 July 2025"
     }
 
-    "must have the correct tags" in {
-      val tags = doc.getElementById("main-content").getElementsByClass("govuk-tag govuk-tag--red")
-      tags.size() mustBe 2
-      tags.get(0).text() mustBe "DUE"
-      tags.get(1).text() mustBe "DUE"
+    "must have correct linkText in submit notification link section" in {
+      val sectionLink =
+        doc
+          .getElementById("main-content")
+          .getElementById("section-SubmitNotificationLink")
+          .getElementsByClass("govuk-link")
+      sectionLink.size() mustBe 1
+      sectionLink.get(0).text() mustBe "Submit a notification"
     }
 
-    "must have the right content from the model data in the right places" in {
-      val actions = doc.getElementById("main-content").getElementsByClass("govuk-summary-list__actions")
-      actions.size() mustBe 13
-      actions.get(0).text() mustBe "Fake Company Ltd"
-      actions.get(1).text() mustBe "fakexxx1234"
-      actions.get(2).text() mustBe "30 July 2025 to 30 July 2025"
-      actions.get(3).text() mustBe "DUE"
-      actions.get(4).text() mustBe "30 July 2025"
-      actions.get(5).text() mustBe "Download the notification template"
-      actions.get(6).text() mustBe "Read the notification template guidance"
-      actions.get(7).text() mustBe "Not present yet"
-      actions.get(8).text() mustBe "DUE"
-      actions.get(9).text() mustBe "30 July 2025"
-      actions.get(10).text() mustBe "Download the certification template"
-      actions.get(11).text() mustBe "Read the certification template guidance"
-      actions.get(12).text() mustBe "Not present yet"
+    "must have correct heading labels and values in notification details section" in {
+      val section = doc.getElementById("main-content").getElementById("section-Notification")
+
+      val heading = section.getElementsByClass("govuk-heading-m")
+      val labels  = section.getElementsByClass("govuk-summary-list__key")
+      val values  = section.getElementsByClass("govuk-summary-list__actions")
+
+      heading.size() mustBe 1
+      heading.get(0).text() mustBe "Notification"
+
+      labels.size() mustBe 5
+      labels.get(0).text() mustBe "Status"
+      labels.get(1).text() mustBe "Due date"
+      labels.get(2).text() mustBe "Template"
+      labels.get(3).text() mustBe "Template guidance"
+      labels.get(4).text() mustBe "Submission history"
+
+      values.size() mustBe 5
+      values.get(0).text() mustBe "DUE"
+      values.get(1).text() mustBe "30 July 2025"
+      values.get(2).text() mustBe "Download the notification template"
+      values.get(3).text() mustBe "Read the notification template guidance"
+      values.get(4).text() mustBe "Not present yet"
+    }
+
+    "must have correct heading labels and values in certification details section" in {
+      val section = doc.getElementById("main-content").getElementById("section-Certification")
+
+      val heading = section.getElementsByClass("govuk-heading-m")
+      val labels  = section.getElementsByClass("govuk-summary-list__key")
+      val values  = section.getElementsByClass("govuk-summary-list__actions")
+
+      heading.size() mustBe 1
+      heading.get(0).text() mustBe "Certification"
+
+      labels.size() mustBe 5
+      labels.get(0).text() mustBe "Status"
+      labels.get(1).text() mustBe "Due date"
+      labels.get(2).text() mustBe "Template"
+      labels.get(3).text() mustBe "Template guidance"
+      labels.get(4).text() mustBe "Submission history"
+
+      values.size() mustBe 5
+      values.get(0).text() mustBe "DUE"
+      values.get(1).text() mustBe "30 July 2025"
+      values.get(2).text() mustBe "Download the certification template"
+      values.get(3).text() mustBe "Read the certification template guidance"
+      values.get(4).text() mustBe "Not present yet"
+    }
+
+    "must have correct links and text in final link section" in {
+      val sectionLink =
+        doc
+          .getElementById("main-content")
+          .getElementById("section-finalLinks")
+          .getElementsByClass("govuk-link")
+      sectionLink.size() mustBe 2
+      sectionLink.get(0).text() mustBe "Manage contact details"
+      sectionLink.get(1).text() mustBe "Manage company details"
     }
   }
 }

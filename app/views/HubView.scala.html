@@ -27,6 +27,7 @@
 
 @layout(pageTitle = titleNoForm(messages("hub.dashboard.title"))) {
 
+     <div id="section-CompanyDetails">
      <h1 class="govuk-heading-l">@messages("hub.dashboard.heading")</h1>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
@@ -46,12 +47,15 @@
        </dd>
       </div>
      </dl>
+     </div>
 
-     <p class="govuk-body">
-      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link1Text")</a>
-     </p>
+     <div id="section-SubmitNotificationLink">
+       <p class="govuk-body">
+        <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link1Text")</a>
+       </p>
+     </div>
 
-
+     <div id="section-Notification">
      <h2 class="govuk-heading-m">@messages("hub.dashboard.subHeading1")</h2>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
@@ -85,8 +89,10 @@
        <dd class="govuk-summary-list__actions">@messages("hub.dashboard.strNotPresentYet")</dd>
       </div>
      </dl>
+     </div>
 
 
+     <div id="section-Certification">
      <h2 class="govuk-heading-m">@messages("hub.dashboard.subHeading2")</h2>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
@@ -119,14 +125,17 @@
        <dd class="govuk-summary-list__actions">@messages("hub.dashboard.strNotPresentYet")</dd>
       </div>
      </dl>
+     </div>
 
 
+     <div id="section-finalLinks">
      <p class="govuk-body">
       <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link2Text")</a>
      </p>
      <p class="govuk-body">
       <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link3Text")</a>
      </p>
+     </div>
 
 }
 
