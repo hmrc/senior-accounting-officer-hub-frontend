@@ -1,4 +1,4 @@
-service.name = senior-accounting-officer-hub-frontend
+service.name = Senior Accounting Officer notification and certificate account
 hub.dashboard.title = Senior Accounting Officer notification and certificate account
 hub.dashboard.heading = Senior Accounting Officer notification and certificate account
 hub.dashboard.companyNameLabel = Company name

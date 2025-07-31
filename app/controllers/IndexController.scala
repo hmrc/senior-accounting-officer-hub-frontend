@@ -45,14 +45,12 @@ class IndexController @Inject() (
 
     val notificationDetails = NotificationDetails(
       status = "DUE",
-      dueDate = LocalDate.now(),
-      submissionHistory = "Link (not yet available)"
+      dueDate = LocalDate.now()
     )
 
     val certificationDetails = CertificationDetails(
       status = "DUE",
-      dueDate = LocalDate.now(),
-      submissionHistory = "Link (not yet available)"
+      dueDate = LocalDate.now()
     )
 
     Ok(hubView(companyDetails, notificationDetails, certificationDetails))

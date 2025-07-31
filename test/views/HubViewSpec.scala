@@ -45,35 +45,31 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
 
   val notificationDetails = NotificationDetails(
     status = "DUE",
-    dueDate = LocalDate.parse(strTestDate),
-    submissionHistory = "Link (not yet available)"
+    dueDate = LocalDate.parse(strTestDate)
   )
 
   val certificationDetails = CertificationDetails(
     status = "DUE",
-    dueDate = LocalDate.parse(strTestDate),
-    submissionHistory = "Link (not yet available)"
+    dueDate = LocalDate.parse(strTestDate)
   )
-  val doc = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
-
+  val doc         = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
+  val mainContent = doc.getElementById("main-content")
   "HubView" must {
 
     "must generate a view with the correct heading and title" in {
-      val mainContent = doc.getElementById("main-content")
-      val h1          = mainContent.getElementsByTag("h1")
+      val h1 = mainContent.getElementsByTag("h1")
       h1.size() mustBe 1
       h1.get(0).text() mustBe "Senior Accounting Officer notification and certificate account"
-      doc.title mustBe "Senior Accounting Officer notification and certificate account - senior-accounting-officer-hub-frontend - site.govuk"
+      doc.title mustBe "Senior Accounting Officer notification and certificate account - Senior Accounting Officer notification and certificate account - site.govuk"
     }
 
     "must have correct correct number of sections" in {
-      val main     = doc.getElementById("main-content")
-      val sections = main.getElementsByAttributeValueContaining("id", "section")
+      val sections = mainContent.getElementsByAttributeValueContaining("id", "section-")
       sections.size() mustBe 5
     }
 
     "must have correct labels and values in company details section" in {
-      val section = doc.getElementById("main-content").getElementById("section-CompanyDetails")
+      val section = mainContent.getElementById("section-companyDetails")
       val labels  = section.getElementsByClass("govuk-summary-list__key")
       val values  = section.getElementsByClass("govuk-summary-list__actions")
 
@@ -90,16 +86,15 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
 
     "must have correct linkText in submit notification link section" in {
       val sectionLink =
-        doc
-          .getElementById("main-content")
-          .getElementById("section-SubmitNotificationLink")
+        mainContent
+          .getElementById("section-submitNotificationLink")
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 1
       sectionLink.get(0).text() mustBe "Submit a notification"
     }
 
     "must have correct heading labels and values in notification details section" in {
-      val section = doc.getElementById("main-content").getElementById("section-Notification")
+      val section = mainContent.getElementById("section-notification")
 
       val heading = section.getElementsByClass("govuk-heading-m")
       val labels  = section.getElementsByClass("govuk-summary-list__key")
@@ -124,7 +119,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
     }
 
     "must have correct heading labels and values in certification details section" in {
-      val section = doc.getElementById("main-content").getElementById("section-Certification")
+      val section = mainContent.getElementById("section-certification")
 
       val heading = section.getElementsByClass("govuk-heading-m")
       val labels  = section.getElementsByClass("govuk-summary-list__key")
@@ -150,8 +145,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
 
     "must have correct links and text in final link section" in {
       val sectionLink =
-        doc
-          .getElementById("main-content")
+        mainContent
           .getElementById("section-finalLinks")
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 2

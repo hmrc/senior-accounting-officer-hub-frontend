@@ -20,6 +20,5 @@ import java.time.LocalDate
 
 final case class NotificationDetails(
     status: String,
-    dueDate: LocalDate,
-    submissionHistory: String
+    dueDate: LocalDate
 )
