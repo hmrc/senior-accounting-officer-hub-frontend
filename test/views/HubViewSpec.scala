@@ -19,6 +19,7 @@ package views
 import base.SpecBase
 import models.{CertificationDetails, CompanyDetails, NotificationDetails}
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Element
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.Request
@@ -54,6 +55,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
   )
   val doc         = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
   val mainContent = doc.getElementById("main-content")
+
   "HubView" must {
 
     "must generate a view with the correct heading and title" in {
@@ -68,20 +70,64 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       sections.size() mustBe 5
     }
 
-    "must have correct labels and values in company details section" in {
-      val section = mainContent.getElementById("section-company-details")
-      val labels  = section.getElementsByClass("govuk-summary-list__key")
-      val values  = section.getElementsByClass("govuk-summary-list__actions")
+    "must have correct content for company details section" in {
+      val rows = mainContent.getElementById("section-company-details").select("div.govuk-summary-list__row")
+      rows.size() mustBe 3
+      validateRow(rows.get(0), keyText = "Company name", actionText = "Fake Company Ltd", None)
+      validateRow(rows.get(1), keyText = "ReferenceID", actionText = "fakexxx1234", None)
+      validateRow(rows.get(2), keyText = "Accounting period", actionText = "30 July 2025 to 30 July 2025", None)
+    }
 
-      labels.size() mustBe 3
-      labels.get(0).text() mustBe "Company name"
-      labels.get(1).text() mustBe "ReferenceID"
-      labels.get(2).text() mustBe "Accounting period"
+    "must have correct content for notification section" in {
+      val rows = mainContent.getElementById("section-notification").select("div.govuk-summary-list__row")
+      rows.size() mustBe 5
 
-      values.size() mustBe 3
-      values.get(0).text() mustBe "Fake Company Ltd"
-      values.get(1).text() mustBe "fakexxx1234"
-      values.get(2).text() mustBe "30 July 2025 to 30 July 2025"
+      validateRow(
+        rows.get(0),
+        keyText = "Status",
+        actionText = "DUE",
+        None
+      )
+      validateRow(rows.get(1), keyText = "Due date", actionText = "30 July 2025", None)
+      validateRow(
+        rows.get(2),
+        keyText = "Template",
+        actionText = "Download ",
+        Some("the notification template")
+      )
+      validateRow(
+        rows.get(3),
+        keyText = "Template guidance",
+        actionText = "Read ",
+        Some("the notification template guidance")
+      )
+      validateRow(rows.get(4), keyText = "Submission history", actionText = "Not present yet", None)
+    }
+
+    "must have correct content for certification section" in {
+      val rows = mainContent.getElementById("section-certification").select("div.govuk-summary-list__row")
+      rows.size() mustBe 5
+
+      validateRow(
+        rows.get(0),
+        keyText = "Status",
+        actionText = "DUE",
+        None
+      )
+      validateRow(rows.get(1), keyText = "Due date", actionText = "30 July 2025", None)
+      validateRow(
+        rows.get(2),
+        keyText = "Template",
+        actionText = "Download ",
+        Some("the certification template")
+      )
+      validateRow(
+        rows.get(3),
+        keyText = "Template guidance",
+        actionText = "Read ",
+        Some("the certification template guidance")
+      )
+      validateRow(rows.get(4), keyText = "Submission history", actionText = "Not present yet", None)
     }
 
     "must have correct linkText in submit notification link section" in {
@@ -93,56 +139,6 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       sectionLink.get(0).text() mustBe "Submit a notification"
     }
 
-    "must have correct heading labels and values in notification details section" in {
-      val section = mainContent.getElementById("section-notification")
-
-      val heading = section.getElementsByClass("govuk-heading-m")
-      val labels  = section.getElementsByClass("govuk-summary-list__key")
-      val values  = section.getElementsByClass("govuk-summary-list__actions")
-
-      heading.size() mustBe 1
-      heading.get(0).text() mustBe "Notification"
-
-      labels.size() mustBe 5
-      labels.get(0).text() mustBe "Status"
-      labels.get(1).text() mustBe "Due date"
-      labels.get(2).text() mustBe "Template"
-      labels.get(3).text() mustBe "Template guidance"
-      labels.get(4).text() mustBe "Submission history"
-
-      values.size() mustBe 5
-      values.get(0).text() mustBe "DUE"
-      values.get(1).text() mustBe "30 July 2025"
-      values.get(2).text() mustBe "Download the notification template"
-      values.get(3).text() mustBe "Read the notification template guidance"
-      values.get(4).text() mustBe "Not present yet"
-    }
-
-    "must have correct heading labels and values in certification details section" in {
-      val section = mainContent.getElementById("section-certification")
-
-      val heading = section.getElementsByClass("govuk-heading-m")
-      val labels  = section.getElementsByClass("govuk-summary-list__key")
-      val values  = section.getElementsByClass("govuk-summary-list__actions")
-
-      heading.size() mustBe 1
-      heading.get(0).text() mustBe "Certification"
-
-      labels.size() mustBe 5
-      labels.get(0).text() mustBe "Status"
-      labels.get(1).text() mustBe "Due date"
-      labels.get(2).text() mustBe "Template"
-      labels.get(3).text() mustBe "Template guidance"
-      labels.get(4).text() mustBe "Submission history"
-
-      values.size() mustBe 5
-      values.get(0).text() mustBe "DUE"
-      values.get(1).text() mustBe "30 July 2025"
-      values.get(2).text() mustBe "Download the certification template"
-      values.get(3).text() mustBe "Read the certification template guidance"
-      values.get(4).text() mustBe "Not present yet"
-    }
-
     "must have correct links and text in final link section" in {
       val sectionLink =
         mainContent
@@ -152,5 +148,47 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       sectionLink.get(0).text() mustBe "Manage contact details"
       sectionLink.get(1).text() mustBe "Manage company details"
     }
+  }
+
+  def validateRow(
+      row: Element,
+      keyText: String,
+      actionText: String,
+      actionHiddenText: Option[String]
+  ) = {
+    val key    = row.select("dt.govuk-summary-list__key")
+    val action = row.select("dd.govuk-summary-list__actions")
+
+    key.size() mustBe 1
+    action.size() mustBe 1
+
+    withClue("row keyText mismatch:\n") {
+      key.get(0).text() mustBe keyText
+    }
+
+    actionHiddenText match {
+      case Some(hiddenText) =>
+
+        val hiddenTextFound = action.get(0).getElementsByClass("govuk-visually-hidden").text() match {
+          case str => str
+          case _   => ""
+        }
+
+        val actionTextFound = action.get(0).text.substring(0, action.get(0).text.length - hiddenTextFound.length)
+
+        println(action.get(0).text)
+        println(hiddenTextFound)
+        println(actionTextFound)
+
+        withClue("row actionHiddenText mismatch:\n") {
+          hiddenTextFound mustBe hiddenText
+        }
+
+        withClue("row actionText mismatch:\n") {
+          actionTextFound mustBe actionText
+        }
+      case _ => ""
+    }
+
   }
 }

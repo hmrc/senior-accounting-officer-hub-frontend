@@ -31,98 +31,100 @@
      <h1 class="govuk-heading-l">@messages("hub.dashboard.heading")</h1>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.companyNameLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.companyDetailsTable.row.companyName.label")</dt>
        <dd class="govuk-summary-list__actions">@companyDetails.companyName</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.referenceIdLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.companyDetailsTable.row.referenceId.label")</dt>
        <dd class="govuk-summary-list__actions">@companyDetails.referenceId</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.accountingPeriodLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.companyDetailsTable.row.accountingPeriod.label")</dt>
        <dd class="govuk-summary-list__actions">
         @companyDetails.accountingPeriodStartDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))
-         @messages("hub.dashboard.strTo")
+         @messages("hub.dashboard.companyDetailsTable.row.accountingPeriod.to")
         @companyDetails.accountingPeriodEndDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))
        </dd>
       </div>
      </dl>
      </div>
 
-     <div id="section-submit-notification-link">
-       <p class="govuk-body">
-        <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link1Text")</a>
-       </p>
-     </div>
+
 
      <div id="section-notification">
-     <h2 class="govuk-heading-m">@messages("hub.dashboard.subHeading1")</h2>
+     <h2 class="govuk-heading-m">@messages("hub.dashboard.notificationDetails.section.heading")</h2>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.statusLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.notificationDetails.section.row.status.label")</dt>
        <dd class="govuk-summary-list__actions">
-        <strong class="govuk-tag govuk-tag--red">@messages("hub.dashboard.strDue")</strong>
+        <strong class="govuk-tag govuk-tag--red">@messages("hub.dashboard.notificationDetails.section.row.status.due")</strong>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.dueDateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.notificationDetails.section.row.dueDate.label")</dt>
        <dd class="govuk-summary-list__actions">@notificationDetails.dueDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.notificationDetails.section.row.template.label")</dt>
 
        <dd class="govuk-summary-list__actions">
         <a class="govuk-link" href="public/templates/sao_notification_template.csv">
-         @messages("hub.dashboard.strDownload")
-         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText1")</span></a>
+         @messages("hub.dashboard.notificationDetails.section.row.link.download.text")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.notificationDetails.section.row.link.notificationTemplate.hiddenText")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateGuidanceLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.notificationDetails.section.row.templateGuidance.label")</dt>
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.dashboard.strRead")
-         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText2")</span></a>
+        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.dashboard.notificationDetails.section.row.link.read")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.notificationDetails.section.row.link.notificationTemplateGuidance.hiddenText")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.submissionHistoryLabel")</dt>
-       <dd class="govuk-summary-list__actions">@messages("hub.dashboard.strNotPresentYet")</dd>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.notificationDetails.section.row.submissionHistory.label")</dt>
+       <dd class="govuk-summary-list__actions">@messages("hub.dashboard.notificationDetails.section.row.link.notPresentYet")</dd>
       </div>
      </dl>
      </div>
 
 
+    <div id="section-submit-notification-link">
+        <p class="govuk-body">
+            <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link.submitNotification.text")</a>
+        </p>
+    </div>
+
      <div id="section-certification">
-     <h2 class="govuk-heading-m">@messages("hub.dashboard.subHeading2")</h2>
+     <h2 class="govuk-heading-m">@messages("hub.dashboard.certificationDetails.section.heading")</h2>
      <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.statusLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.certificationDetails.section.row.status.label")</dt>
        <dd class="govuk-summary-list__actions">
-        <strong class="govuk-tag govuk-tag--red">@messages("hub.dashboard.strDue")</strong>
+        <strong class="govuk-tag govuk-tag--red">@messages("hub.dashboard.certificationDetails.section.row.status.due")</strong>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.dueDateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.certificationDetails.section.row.dueDate.label")</dt>
        <dd class="govuk-summary-list__actions">@certificationDetails.dueDate.format(DateTimeFormatter.ofPattern("dd LLLL yyyy"))</dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.certificationDetails.section.row.template.label")</dt>
 
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="public/templates/sao_notification_template.csv">@messages("hub.dashboard.strDownload")
-         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText3")</span></a>
+        <a class="govuk-link" href="public/templates/sao_notification_template.csv">@messages("hub.dashboard.certificationDetails.section.row.link.download.text")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.certificationDetails.section.row.link.certificationTemplate.hiddenText")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.templateGuidanceLabel")</dt>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.certificationDetails.section.row.templateGuidance.label")</dt>
        <dd class="govuk-summary-list__actions">
-        <a class="govuk-link" href="notification/notification-template-guide.html">@messages("hub.dashboard.strRead")
-         <span class="govuk-visually-hidden"> @messages("hub.dashboard.strHiddenText4")</span></a>
+        <a class="govuk-link" href="notification/certification-template-guide.html">@messages("hub.dashboard.certificationDetails.section.row.link.read")
+         <span class="govuk-visually-hidden"> @messages("hub.dashboard.certificationDetails.section.row.link.certificationTemplateGuidance.hiddenText")</span></a>
        </dd>
       </div>
       <div class="govuk-summary-list__row">
-       <dt class="govuk-summary-list__key">@messages("hub.dashboard.submissionHistoryLabel")</dt>
-       <dd class="govuk-summary-list__actions">@messages("hub.dashboard.strNotPresentYet")</dd>
+       <dt class="govuk-summary-list__key">@messages("hub.dashboard.certificationDetails.section.row.submissionHistory.label")</dt>
+       <dd class="govuk-summary-list__actions">@messages("hub.dashboard.certificationDetails.section.row.link.notPresentYet")</dd>
       </div>
      </dl>
      </div>
@@ -130,10 +132,10 @@
 
      <div id="section-final-links">
      <p class="govuk-body">
-      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link2Text")</a>
+      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link.manageContactDetails.text")</a>
      </p>
      <p class="govuk-body">
-      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link3Text")</a>
+      <a class="govuk-link" href="/beta/notification/submit-a-notification.html">@messages("hub.dashboard.link.manageCompanyDetails.text")</a>
      </p>
      </div>
 
