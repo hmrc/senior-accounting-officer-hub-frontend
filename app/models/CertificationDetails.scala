@@ -19,6 +19,5 @@ package models
 import java.time.LocalDate
 
 final case class CertificationDetails(
-    status: String,
     dueDate: LocalDate
 )

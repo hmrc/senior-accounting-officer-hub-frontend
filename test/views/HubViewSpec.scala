@@ -45,12 +45,10 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
   )
 
   val notificationDetails = NotificationDetails(
-    status = "DUE",
     dueDate = testDate
   )
 
   val certificationDetails = CertificationDetails(
-    status = "DUE",
     dueDate = testDate
   )
   val doc         = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)

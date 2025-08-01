@@ -44,12 +44,10 @@ class IndexController @Inject() (
     )
 
     val notificationDetails = NotificationDetails(
-      status = "DUE",
       dueDate = LocalDate.now()
     )
 
     val certificationDetails = CertificationDetails(
-      status = "DUE",
       dueDate = LocalDate.now()
     )
 
