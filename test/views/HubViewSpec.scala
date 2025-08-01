@@ -174,10 +174,6 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
 
         val actionTextFound = action.get(0).text.substring(0, action.get(0).text.length - hiddenTextFound.length)
 
-        println(action.get(0).text)
-        println(hiddenTextFound)
-        println(actionTextFound)
-
         withClue("row actionHiddenText mismatch:\n") {
           hiddenTextFound mustBe hiddenText
         }
