@@ -90,13 +90,13 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       validateRow(
         rows.get(2),
         keyText = "Template",
-        actionText = "Download ",
+        actionText = "Download",
         Some("the notification template")
       )
       validateRow(
         rows.get(3),
         keyText = "Template guidance",
-        actionText = "Read ",
+        actionText = "Read",
         Some("the notification template guidance")
       )
       validateRow(rows.get(4), keyText = "Submission history", actionText = "Not present yet", None)
@@ -116,13 +116,13 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       validateRow(
         rows.get(2),
         keyText = "Template",
-        actionText = "Download ",
+        actionText = "Download",
         Some("the certification template")
       )
       validateRow(
         rows.get(3),
         keyText = "Template guidance",
-        actionText = "Read ",
+        actionText = "Read",
         Some("the certification template guidance")
       )
       validateRow(rows.get(4), keyText = "Submission history", actionText = "Not present yet", None)
@@ -149,40 +149,30 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
   }
 
   def validateRow(
-      row: Element,
-      keyText: String,
-      actionText: String,
-      actionHiddenText: Option[String]
-  ) = {
-    val key    = row.select("dt.govuk-summary-list__key")
+                   row: Element,
+                   keyText: String,
+                   actionText: String,
+                   actionHiddenText: Option[String] = None
+                 ) = {
+    val key = row.select("dt.govuk-summary-list__key")
     val action = row.select("dd.govuk-summary-list__actions")
-
     key.size() mustBe 1
     action.size() mustBe 1
-
     withClue("row keyText mismatch:\n") {
       key.get(0).text() mustBe keyText
     }
-
-    actionHiddenText match {
-      case Some(hiddenText) =>
-
-        val hiddenTextFound = action.get(0).getElementsByClass("govuk-visually-hidden").text() match {
-          case str => str
-          case _   => ""
-        }
-
-        val actionTextFound = action.get(0).text.substring(0, action.get(0).text.length - hiddenTextFound.length)
-
-        withClue("row actionHiddenText mismatch:\n") {
-          hiddenTextFound mustBe hiddenText
-        }
-
-        withClue("row actionText mismatch:\n") {
-          actionTextFound mustBe actionText
-        }
-      case _ => ""
+    val actionElement = action.get(0)
+    actionHiddenText.foreach(hiddenText => {
+      val maybeHiddenElement = Option(actionElement.getElementsByClass("govuk-visually-hidden"))
+      val maybeHiddenTextFound = maybeHiddenElement.map(_.text())
+      withClue("row actionHiddenText mismatch:\n") {
+        maybeHiddenTextFound mustBe Some(hiddenText)
+      }
+      maybeHiddenElement.map(_.remove())
+    })
+    val actionTextFound = actionElement.text
+    withClue("row actionText mismatch:\n") {
+      actionTextFound mustBe actionText
     }
-
   }
 }
