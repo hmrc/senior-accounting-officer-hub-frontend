@@ -35,23 +35,23 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
 
   given Messages = app.injector.instanceOf[MessagesApi].preferred(request)
 
-  private val strTestDate = "2025-07-30"
+  private val testDate = LocalDate.of(2025, 7, 30)
 
   val companyDetails = CompanyDetails(
     companyName = "Fake Company Ltd",
     referenceId = "fakexxx1234",
-    accountingPeriodStartDate = LocalDate.parse(strTestDate),
-    accountingPeriodEndDate = LocalDate.parse(strTestDate)
+    accountingPeriodStartDate = testDate,
+    accountingPeriodEndDate = testDate
   )
 
   val notificationDetails = NotificationDetails(
     status = "DUE",
-    dueDate = LocalDate.parse(strTestDate)
+    dueDate = testDate
   )
 
   val certificationDetails = CertificationDetails(
     status = "DUE",
-    dueDate = LocalDate.parse(strTestDate)
+    dueDate = testDate
   )
   val doc         = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
   val mainContent = doc.getElementById("main-content")
