@@ -71,9 +71,9 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
     "must have correct content for company details section" in {
       val rows = mainContent.getElementById("section-company-details").select("div.govuk-summary-list__row")
       rows.size() mustBe 3
-      validateRow(rows.get(0), keyText = "Company name", actionText = "Fake Company Ltd")
-      validateRow(rows.get(1), keyText = "ReferenceID", actionText = "fakexxx1234")
-      validateRow(rows.get(2), keyText = "Accounting period", actionText = "30 July 2025 to 30 July 2025")
+      validateRow(row = rows.get(0), keyText = "Company name", actionText = "Fake Company Ltd")
+      validateRow(row = rows.get(1), keyText = "ReferenceID", actionText = "fakexxx1234")
+      validateRow(row = rows.get(2), keyText = "Accounting period", actionText = "30 July 2025 to 30 July 2025")
     }
 
     "must have correct content for notification section" in {
@@ -81,20 +81,19 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       rows.size() mustBe 5
 
       validateRow(
-        rows.get(0),
+        row = rows.get(0),
         keyText = "Status",
-        actionText = "DUE",
-        None
+        actionText = "DUE"
       )
       validateRow(row = rows.get(1), keyText = "Due date", actionText = "30 July 2025")
       validateRow(
-        rows.get(2),
+        row = rows.get(2),
         keyText = "Template",
         actionText = "Download",
         Some("the notification template")
       )
       validateRow(
-        rows.get(3),
+        row = rows.get(3),
         keyText = "Template guidance",
         actionText = "Read",
         Some("the notification template guidance")
@@ -107,20 +106,19 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       rows.size() mustBe 5
 
       validateRow(
-        rows.get(0),
+        row = rows.get(0),
         keyText = "Status",
-        actionText = "DUE",
-        None
+        actionText = "DUE"
       )
       validateRow(row = rows.get(1), keyText = "Due date", actionText = "30 July 2025")
       validateRow(
-        rows.get(2),
+        row = rows.get(2),
         keyText = "Template",
         actionText = "Download",
         Some("the certification template")
       )
       validateRow(
-        rows.get(3),
+        row = rows.get(3),
         keyText = "Template guidance",
         actionText = "Read",
         Some("the certification template guidance")
