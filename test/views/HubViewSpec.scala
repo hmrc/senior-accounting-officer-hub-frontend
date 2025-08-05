@@ -90,13 +90,13 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
         row = rows.get(2),
         keyText = "Template",
         actionText = "Download",
-        Some("the notification template")
+        actionHiddenText = Some("the notification template")
       )
       validateRow(
         row = rows.get(3),
         keyText = "Template guidance",
         actionText = "Read",
-        Some("the notification template guidance")
+        actionHiddenText = Some("the notification template guidance")
       )
       validateRow(row = rows.get(4), keyText = "Submission history", actionText = "Not present yet")
     }
@@ -115,13 +115,13 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
         row = rows.get(2),
         keyText = "Template",
         actionText = "Download",
-        Some("the certification template")
+        actionHiddenText = Some("the certification template")
       )
       validateRow(
         row = rows.get(3),
         keyText = "Template guidance",
         actionText = "Read",
-        Some("the certification template guidance")
+        actionHiddenText = Some("the certification template guidance")
       )
       validateRow(row = rows.get(4), keyText = "Submission history", actionText = "Not present yet")
     }
