@@ -71,9 +71,9 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
     "must have correct content for company details section" in {
       val rows = mainContent.getElementById("section-company-details").select("div.govuk-summary-list__row")
       rows.size() mustBe 3
-      validateRow(rows.get(0), keyText = "Company name", actionText = "Fake Company Ltd", None)
-      validateRow(rows.get(1), keyText = "ReferenceID", actionText = "fakexxx1234", None)
-      validateRow(rows.get(2), keyText = "Accounting period", actionText = "30 July 2025 to 30 July 2025", None)
+      validateRow(rows.get(0), keyText = "Company name", actionText = "Fake Company Ltd")
+      validateRow(rows.get(1), keyText = "ReferenceID", actionText = "fakexxx1234")
+      validateRow(rows.get(2), keyText = "Accounting period", actionText = "30 July 2025 to 30 July 2025")
     }
 
     "must have correct content for notification section" in {
@@ -86,7 +86,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
         actionText = "DUE",
         None
       )
-      validateRow(rows.get(1), keyText = "Due date", actionText = "30 July 2025", None)
+      validateRow(row = rows.get(1), keyText = "Due date", actionText = "30 July 2025")
       validateRow(
         rows.get(2),
         keyText = "Template",
@@ -99,7 +99,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
         actionText = "Read",
         Some("the notification template guidance")
       )
-      validateRow(rows.get(4), keyText = "Submission history", actionText = "Not present yet", None)
+      validateRow(row = rows.get(4), keyText = "Submission history", actionText = "Not present yet")
     }
 
     "must have correct content for certification section" in {
@@ -112,7 +112,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
         actionText = "DUE",
         None
       )
-      validateRow(rows.get(1), keyText = "Due date", actionText = "30 July 2025", None)
+      validateRow(row = rows.get(1), keyText = "Due date", actionText = "30 July 2025")
       validateRow(
         rows.get(2),
         keyText = "Template",
@@ -125,7 +125,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
         actionText = "Read",
         Some("the certification template guidance")
       )
-      validateRow(rows.get(4), keyText = "Submission history", actionText = "Not present yet", None)
+      validateRow(row = rows.get(4), keyText = "Submission history", actionText = "Not present yet")
     }
 
     "must have correct linkText in submit notification link section" in {
@@ -142,6 +142,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
         mainContent
           .getElementById("section-final-links")
           .getElementsByClass("govuk-link")
+
       sectionLink.size() mustBe 2
       sectionLink.get(0).text() mustBe "Manage contact details"
       sectionLink.get(1).text() mustBe "Manage company details"
@@ -149,21 +150,21 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
   }
 
   def validateRow(
-                   row: Element,
-                   keyText: String,
-                   actionText: String,
-                   actionHiddenText: Option[String] = None
-                 ) = {
-    val key = row.select("dt.govuk-summary-list__key")
-    val action = row.select("dd.govuk-summary-list__actions")
-    key.size() mustBe 1
-    action.size() mustBe 1
+      row: Element,
+      keyText: String,
+      actionText: String,
+      actionHiddenText: Option[String] = None
+  ) = {
+    val rowKey    = row.select("dt.govuk-summary-list__key")
+    val rowAction = row.select("dd.govuk-summary-list__actions")
+    rowKey.size() mustBe 1
+    rowAction.size() mustBe 1
     withClue("row keyText mismatch:\n") {
-      key.get(0).text() mustBe keyText
+      rowKey.get(0).text() mustBe keyText
     }
-    val actionElement = action.get(0)
+    val actionElement = rowAction.get(0)
     actionHiddenText.foreach(hiddenText => {
-      val maybeHiddenElement = Option(actionElement.getElementsByClass("govuk-visually-hidden"))
+      val maybeHiddenElement   = Option(actionElement.getElementsByClass("govuk-visually-hidden"))
       val maybeHiddenTextFound = maybeHiddenElement.map(_.text())
       withClue("row actionHiddenText mismatch:\n") {
         maybeHiddenTextFound mustBe Some(hiddenText)
