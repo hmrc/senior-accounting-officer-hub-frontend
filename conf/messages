@@ -1,2 +1,48 @@
-service.name = senior-accounting-officer-hub-frontend
-service.text = This is your new service
+service.name = Senior Accounting Officer notification and certificate account
+
+hub.dashboard.title = Senior Accounting Officer notification and certificate account
+hub.dashboard.heading = Senior Accounting Officer notification and certificate account
+
+hub.dashboard.companyDetailsTable.row.companyName.label = Company name
+hub.dashboard.companyDetailsTable.row.referenceId.label = ReferenceID
+hub.dashboard.companyDetailsTable.row.accountingPeriod.label = Accounting period
+hub.dashboard.companyDetailsTable.row.accountingPeriod.to = to
+
+hub.dashboard.notificationDetails.section.heading = Notification
+hub.dashboard.notificationDetails.section.row.status.label = Status
+hub.dashboard.notificationDetails.section.row.status.due = DUE
+hub.dashboard.notificationDetails.section.row.dueDate.label = Due date
+hub.dashboard.notificationDetails.section.row.template.label = Template
+hub.dashboard.notificationDetails.section.row.link.download.text = Download
+hub.dashboard.notificationDetails.section.row.link.notificationTemplate.hiddenText = the notification template
+hub.dashboard.notificationDetails.section.row.templateGuidance.label = Template guidance
+hub.dashboard.notificationDetails.section.row.link.read = Read
+hub.dashboard.notificationDetails.section.row.link.notificationTemplateGuidance.hiddenText = the notification template guidance
+hub.dashboard.notificationDetails.section.row.submissionHistory.label = Submission history
+hub.dashboard.notificationDetails.section.row.link.notPresentYet = Not present yet
+
+hub.dashboard.link.submitNotification.text = Submit a notification
+
+hub.dashboard.certificationDetails.section.heading = Certification
+hub.dashboard.certificationDetails.section.row.status.label = Status
+hub.dashboard.certificationDetails.section.row.status.due = DUE
+hub.dashboard.certificationDetails.section.row.dueDate.label = Due date
+hub.dashboard.certificationDetails.section.row.template.label = Template
+hub.dashboard.certificationDetails.section.row.link.download.text = Download
+hub.dashboard.certificationDetails.section.row.link.certificationTemplate.hiddenText = the certification template
+hub.dashboard.certificationDetails.section.row.templateGuidance.label = Template guidance
+hub.dashboard.certificationDetails.section.row.link.read = Read
+hub.dashboard.certificationDetails.section.row.link.certificationTemplateGuidance.hiddenText = the certification template guidance
+hub.dashboard.certificationDetails.section.row.submissionHistory.label = Submission history
+hub.dashboard.certificationDetails.section.row.link.notPresentYet = Not present yet
+
+hub.dashboard.link.manageContactDetails.text = Manage contact details
+hub.dashboard.link.manageCompanyDetails.text = Manage company details
+
+
+
+
+
+
+
+
