@@ -18,7 +18,6 @@ package config
 
 import com.google.inject.AbstractModule
 import controllers.actions.{AuthenticatedIdentifierAction, IdentifierAction}
-import controllers.actions.*
 
 class Module extends AbstractModule {
 
