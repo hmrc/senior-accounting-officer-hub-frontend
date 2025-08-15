@@ -19,7 +19,9 @@ package views
 import base.SpecBase
 import models.{CertificationDetails, CompanyDetails, NotificationDetails}
 import org.jsoup.Jsoup
+import org.jsoup.nodes.Document
 import org.jsoup.nodes.Element
+import org.scalatest.compatible.Assertion
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.mvc.Request
@@ -31,28 +33,28 @@ import java.time.LocalDate
 class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
   val SUT: HubView = app.injector.instanceOf[HubView]
 
-  given request: Request[_] = FakeRequest()
+  given request: Request[?] = FakeRequest()
 
   given Messages = app.injector.instanceOf[MessagesApi].preferred(request)
 
   private val testDate = LocalDate.of(2025, 7, 30)
 
-  val companyDetails = CompanyDetails(
+  val companyDetails: CompanyDetails = CompanyDetails(
     companyName = "Fake Company Ltd",
     referenceId = "fakexxx1234",
     accountingPeriodStartDate = testDate,
     accountingPeriodEndDate = testDate
   )
 
-  val notificationDetails = NotificationDetails(
+  val notificationDetails: NotificationDetails = NotificationDetails(
     dueDate = testDate
   )
 
-  val certificationDetails = CertificationDetails(
+  val certificationDetails: CertificationDetails = CertificationDetails(
     dueDate = testDate
   )
-  val doc         = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
-  val mainContent = doc.getElementById("main-content")
+  val doc: Document        = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
+  val mainContent: Element = doc.getElementById("main-content")
 
   "HubView" must {
 
@@ -152,7 +154,7 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
       keyText: String,
       actionText: String,
       actionHiddenText: Option[String] = None
-  ) = {
+  ): Assertion = {
     val rowKey    = row.select("dt.govuk-summary-list__key")
     val rowAction = row.select("dd.govuk-summary-list__actions")
     rowKey.size() mustBe 1

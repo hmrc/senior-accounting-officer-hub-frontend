@@ -18,7 +18,6 @@ package controllers.auth
 
 import base.SpecBase
 import controllers.actions.{FakeIdentifierAction, IdentifierAction}
-import controllers.auth.SignedOutController
 import org.scalatest.wordspec.AnyWordSpec
 import play.api.Application
 import play.api.http.Status
@@ -27,7 +26,6 @@ import play.api.inject.bind
 import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import controllers.actions.*
 import views.html.auth.SignedOutView
 
 class SignedOutControllerSpec extends SpecBase {

@@ -35,8 +35,18 @@ lazy val microservice = (project in file("."))
     PlayKeys.playDefaultPort := 10056
   )
   .settings(CodeCoverageSettings.settings *)
+  .settings(scalafixSettings *)
 
 lazy val it =
   (project in file("it"))
     .enablePlugins(PlayScala)
     .dependsOn(microservice % "test->test")
+
+val scalafixSettings: Seq[Setting[_]] = Seq(
+  semanticdbEnabled := true, // enable SemanticDB
+  scalacOptions += {
+    "-Wall"
+  }
+)
+
+addCommandAlias("lint", "scalafixAll;scalafmtAll")
