@@ -45,7 +45,7 @@ class IndexISpec extends ISpecBase {
       response.status mustBe Status.OK
       Option(
         Jsoup.parse(response.body).selectFirst("h1").text
-      ).get mustBe "Senior Accounting Officer notification and certificate account"
+      ).get mustBe "Senior Accounting Officer notification and certificate"
     }
   }
 

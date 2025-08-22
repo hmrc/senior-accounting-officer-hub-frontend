@@ -42,7 +42,7 @@ lazy val it =
     .enablePlugins(PlayScala)
     .dependsOn(microservice % "test->test")
 
-val scalafixSettings: Seq[Setting[_]] = Seq(
+val scalafixSettings: Seq[Setting[?]] = Seq(
   semanticdbEnabled := true, // enable SemanticDB
   scalacOptions += {
     "-Wall"
