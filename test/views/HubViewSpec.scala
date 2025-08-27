@@ -16,26 +16,16 @@
 
 package views
 
-import base.SpecBase
+import base.ViewSpecBase
 import models.{CertificationDetails, CompanyDetails, NotificationDetails}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.Document
-import org.jsoup.nodes.Element
+import org.jsoup.nodes.{Document, Element}
 import org.scalatest.compatible.Assertion
-import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.i18n.{Messages, MessagesApi}
-import play.api.mvc.Request
-import play.api.test.FakeRequest
 import views.html.HubView
 
 import java.time.LocalDate
 
-class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
-  val SUT: HubView = app.injector.instanceOf[HubView]
-
-  given request: Request[?] = FakeRequest()
-
-  given Messages = app.injector.instanceOf[MessagesApi].preferred(request)
+class HubViewSpec extends ViewSpecBase[HubView] {
 
   private val testDate = LocalDate.of(2025, 7, 30)
 
@@ -54,16 +44,15 @@ class HubViewSpec extends SpecBase with GuiceOneAppPerSuite {
     dueDate = testDate
   )
   val doc: Document        = Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
-  val mainContent: Element = doc.getElementById("main-content")
+  val mainContent: Element = doc.getMainContent
 
   "HubView" must {
 
-    "must generate a view with the correct heading and title" in {
-      val h1 = mainContent.getElementsByTag("h1")
-      h1.size() mustBe 1
-      h1.get(0).text() mustBe "Senior Accounting Officer notification and certificate account"
-      doc.title mustBe "Senior Accounting Officer notification and certificate account - Senior Accounting Officer notification and certificate account - site.govuk"
-    }
+    mustHaveCorrectPageTitle(document = doc, title = "Senior Accounting Officer notification and certificate")
+
+    mustHaveCorrectPageHeading(document = doc, h1 = "Senior Accounting Officer notification and certificate")
+
+    mustShowIsThisPageNotWorkingProperlyLink(document = doc)
 
     "must have correct correct number of sections" in {
       val sections = mainContent.getElementsByAttributeValueContaining("id", "section-")
