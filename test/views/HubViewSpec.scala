@@ -59,7 +59,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
 
     "must have correct correct number of sections" in {
       val sections = mainContent.getElementsByAttributeValueContaining("id", "section-")
-      sections.size() mustBe 5
+      sections.size() mustBe 6
     }
 
     "must have correct content for company details section" in {
@@ -152,6 +152,17 @@ class HubViewSpec extends ViewSpecBase[HubView] {
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 1
       sectionLink.get(0).text() mustBe "Submit a notification"
+      sectionLink.get(0).attr("href") mustBe "http://localhost:10058/senior-accounting-officer/submission/submit-notification-start"
+    }
+
+    "must have correct linkText in submit certificate link section" in {
+      val sectionLink =
+        mainContent
+          .getElementById("section-submit-certificate-link")
+          .getElementsByClass("govuk-link")
+      sectionLink.size() mustBe 1
+      sectionLink.get(0).text() mustBe "Submit a certificate"
+      sectionLink.get(0).attr("href") mustBe "http://localhost:10058/senior-accounting-officer/submission/submitCertificateStart"
     }
 
     "must have correct links and text in final link section" in {
