@@ -22,11 +22,20 @@ import models.{CertificationDetails, CompanyDetails, NotificationDetails}
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element}
 import org.scalatest.compatible.Assertion
+import play.api.Application
+import play.api.inject.guice.GuiceApplicationBuilder
 import views.html.HubView
 
 import java.time.LocalDate
 
 class HubViewSpec extends ViewSpecBase[HubView] {
+
+  val testSubmissionFrontendHost = "test-host-config"
+
+  override def fakeApplication(): Application =
+    new GuiceApplicationBuilder()
+      .configure("senior-accounting-officer-submission-frontend.host" -> testSubmissionFrontendHost)
+      .build()
 
   private val testDate = LocalDate.of(2025, 7, 30)
 
@@ -152,7 +161,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 1
       sectionLink.get(0).text() mustBe "Submit a notification"
-      sectionLink.get(0).attr("href") mustBe "http://localhost:10058/senior-accounting-officer/submission/notification/start"
+      sectionLink.get(0).attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/notification/start"
     }
 
     "must have correct linkText in submit certificate link section" in {
@@ -162,7 +171,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 1
       sectionLink.get(0).text() mustBe "Submit a certificate"
-      sectionLink.get(0).attr("href") mustBe "http://localhost:10058/senior-accounting-officer/submission/certificate/start"
+      sectionLink.get(0).attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/certificate/start"
     }
 
     "must have correct links and text in final link section" in {
