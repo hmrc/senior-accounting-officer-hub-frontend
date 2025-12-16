@@ -43,7 +43,8 @@ class AppConfig @Inject() (servicesConfig: ServicesConfig, config: Configuration
   private def exitSurveyBaseUrl: String = config.get[String]("feedback-frontend.host")
   def exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/$contactFormServiceIdentifier"
 
-  def submissionFrontendUrl: String = getValue("senior-accounting-officer-submission-frontend.host")
+  def submissionFrontendHostAndContext: String =
+    s"${getValue("senior-accounting-officer-submission-frontend.host")}/senior-accounting-officer/submission"
 
   private def getValue(key: String): String =
     sys.props

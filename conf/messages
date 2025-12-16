@@ -22,6 +22,7 @@ hub.dashboard.notificationDetails.section.row.submissionHistory.label = Submissi
 hub.dashboard.notificationDetails.section.row.link.notPresentYet = Not present yet
 
 hub.dashboard.link.submitNotification.text = Submit a notification
+hub.dashboard.link.submitCertificate.text = Submit a certificate
 
 hub.dashboard.certificationDetails.section.heading = Certification
 hub.dashboard.certificationDetails.section.row.status.label = Status
