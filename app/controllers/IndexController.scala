@@ -35,7 +35,6 @@ class IndexController @Inject() (
     with I18nSupport {
 
   def onPageLoad(): Action[AnyContent] = identify { implicit request =>
-
     val companyDetails = CompanyDetails(
       companyName = "Fake Company Ltd",
       referenceId = "fakexxx1234",
