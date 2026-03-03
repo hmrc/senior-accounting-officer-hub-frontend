@@ -161,7 +161,9 @@ class HubViewSpec extends ViewSpecBase[HubView] {
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 1
       sectionLink.get(0).text() mustBe "Submit a notification"
-      sectionLink.get(0).attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/notification/start"
+      sectionLink
+        .get(0)
+        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/notification/start"
     }
 
     "must have correct linkText in submit certificate link section" in {
@@ -171,7 +173,9 @@ class HubViewSpec extends ViewSpecBase[HubView] {
           .getElementsByClass("govuk-link")
       sectionLink.size() mustBe 1
       sectionLink.get(0).text() mustBe "Submit a certificate"
-      sectionLink.get(0).attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/certificate/start"
+      sectionLink
+        .get(0)
+        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/certificate/start"
     }
 
     "must have correct links and text in final link section" in {
