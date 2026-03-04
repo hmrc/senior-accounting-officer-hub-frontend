@@ -44,13 +44,13 @@ class ViewSpecBase[T <: BaseScalaTemplate[HtmlFormat.Appendable, Format[HtmlForm
       document.title mustBe s"$title - $expectedServiceName - site.govuk"
     }
 
-  def mustHaveCorrectPageHeading(document: Document, h1: String)(using pos: Position): Unit =
+  def mustHaveCorrectPageHeading(document: Document, expectedText: String)(using pos: Position): Unit =
     "must generate a view with the correct page heading" in {
-      val actualH1 = document.getMainContent.getElementsByTag("h1")
+      val headingText = document.getMainContent.getElementsByTag("h1")
       withClue("the page must contain only a single <h1>\n") {
-        actualH1.size() mustBe 1
+        headingText.size() mustBe 1
       }
-      actualH1.get(0).text() mustBe h1
+      headingText.get(0).text() mustBe expectedText
     }
 
   def mustShowIsThisPageNotWorkingProperlyLink(document: Document)(using pos: Position): Unit =

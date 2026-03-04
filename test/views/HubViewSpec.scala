@@ -62,7 +62,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
 
     mustHaveCorrectPageTitle(document = doc, title = "Senior Accounting Officer notification and certificate")
 
-    mustHaveCorrectPageHeading(document = doc, h1 = "Senior Accounting Officer notification and certificate")
+    mustHaveCorrectPageHeading(document = doc, expectedText = "Senior Accounting Officer notification and certificate")
 
     mustShowIsThisPageNotWorkingProperlyLink(document = doc)
 

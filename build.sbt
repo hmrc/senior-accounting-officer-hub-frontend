@@ -1,5 +1,4 @@
 import play.sbt.routes.RoutesKeys
-import uk.gov.hmrc.versioning.SbtGitVersioning.autoImport.majorVersion
 
 lazy val appName: String = "senior-accounting-officer-hub-frontend"
 
@@ -49,4 +48,5 @@ val scalafixSettings: Seq[Setting[?]] = Seq(
   }
 )
 
-addCommandAlias("lint", "scalafixAll;scalafmtAll")
+addCommandAlias("checkLint", "scalafmtSbtCheck;scalafmtCheckAll")
+addCommandAlias("lint", "scalafixAll;scalafmtSbt;scalafmtAll")
