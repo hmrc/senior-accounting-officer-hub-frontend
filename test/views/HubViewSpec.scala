@@ -111,7 +111,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
         keyText = "Template guidance",
         actionText = "Read",
         actionHiddenText = Some("the notification template guidance"),
-        expectedHref = Some("submission-url/senior-accounting-officer/submission/notification/guidance")
+        expectedHref = Some("submission-url/senior-accounting-officer/submission/template-guidance")
       )
       validateRow(
         row = rows.get(4),
