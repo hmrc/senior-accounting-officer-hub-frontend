@@ -46,6 +46,8 @@ class AppConfig @Inject() (servicesConfig: ServicesConfig, config: Configuration
   def submissionFrontendHostAndContext: String =
     s"${getValue("senior-accounting-officer-submission-frontend.host")}/senior-accounting-officer/submission"
 
+  def templateGuidance: String = s"$submissionFrontendHostAndContext/template-guidance"
+
   private def getValue(key: String): String =
     sys.props
       .get(key)
