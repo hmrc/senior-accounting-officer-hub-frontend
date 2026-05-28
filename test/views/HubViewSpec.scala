@@ -163,7 +163,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
       sectionLink.get(0).text() mustBe "Submit a notification"
       sectionLink
         .get(0)
-        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/notification/start"
+        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/submission-type"
     }
 
     "must have correct linkText in submit certificate link section" in {
@@ -175,7 +175,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
       sectionLink.get(0).text() mustBe "Submit a certificate"
       sectionLink
         .get(0)
-        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/certificate/start"
+        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/submission-type"
     }
 
     "must have correct links and text in final link section" in {
