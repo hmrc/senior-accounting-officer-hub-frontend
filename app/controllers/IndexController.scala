@@ -17,13 +17,12 @@
 package controllers
 
 import controllers.actions.IdentifierAction
-import models.{CertificationDetails, CompanyDetails, NotificationDetails}
+import models.CompanyDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendController
 import views.html.HubView
 
-import java.time.LocalDate
 import javax.inject.{Inject, Singleton}
 
 @Singleton
@@ -37,20 +36,10 @@ class IndexController @Inject() (
   def onPageLoad(): Action[AnyContent] = identify { implicit request =>
     val companyDetails = CompanyDetails(
       companyName = "Fake Company Ltd",
-      referenceId = "fakexxx1234",
-      accountingPeriodStartDate = LocalDate.now(),
-      accountingPeriodEndDate = LocalDate.now()
+      referenceId = "fakexxx1234"
     )
 
-    val notificationDetails = NotificationDetails(
-      dueDate = LocalDate.now()
-    )
-
-    val certificationDetails = CertificationDetails(
-      dueDate = LocalDate.now()
-    )
-
-    Ok(hubView(companyDetails, notificationDetails, certificationDetails))
+    Ok(hubView(companyDetails.companyName, companyDetails.referenceId))
   }
 
 }

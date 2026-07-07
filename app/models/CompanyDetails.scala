@@ -16,11 +16,7 @@
 
 package models
 
-import java.time.LocalDate
-
 final case class CompanyDetails(
     companyName: String,
-    referenceId: String,
-    accountingPeriodStartDate: LocalDate,
-    accountingPeriodEndDate: LocalDate
+    referenceId: String
 )
