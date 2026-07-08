@@ -194,9 +194,8 @@ class ViewSpecBase[T <: BaseScalaTemplate[HtmlFormat.Appendable, Format[HtmlForm
 }
 
 object ViewSpecBase {
-  val expectedServiceName = "Senior Accounting Officer notification and certificate"
-  val expectedServiceId   = "senior-accounting-officer-hub-frontend"
-
+  val expectedServiceName                              = "Senior Accounting Officer notification and certificate"
+  val expectedServiceId                                = "senior-accounting-officer-hub-frontend"
   val excludeHelpLinkAndErrorMessageParagraphsSelector =
     "p:not(:has(a.hmrc-report-technical-issue), .govuk-error-message)"
 }

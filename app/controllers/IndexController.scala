@@ -38,7 +38,6 @@ class IndexController @Inject() (
       companyName = "Fake Company Ltd",
       referenceId = "fakexxx1234"
     )
-
     Ok(hubView(companyDetails.companyName, companyDetails.referenceId))
   }
 

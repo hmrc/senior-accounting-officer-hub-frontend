@@ -32,15 +32,12 @@
     <div>
         <span class="govuk-caption-l">@messages("hub.dashboard.caption", companyName)</span>
         <h1 class="govuk-heading-l">@messages("hub.dashboard.heading")</h1>
-        <!-- COMPANY SUMMARY -->
-        <p class="govuk-body-l">Reference ID: @messages("hub.dashboard.paragraph1", referenceID)</p>
+        <p class="govuk-body-l">@messages("hub.dashboard.paragraph1", referenceID)</p>
     </div>
-    <!-- SUBMISSION TEMPLATE -->
     <div class="account-home-card govuk-!-margin-bottom-5">
         <h2 class="govuk-heading-m"><a class="govuk-link" href="@appConfig.templateGuidance">@messages("hub.dashboard.subheading1")</a></h2>
         <p class="govuk-body">@messages("hub.dashboard.paragraph2")</p>
     </div>
-    <!-- MAKE A SUBMISSION -->
     <div class="account-home-card govuk-!-margin-bottom-5">
         <h2 class="govuk-heading-m"><a class="govuk-link" href="@appConfig.submissionFrontendHostAndContext/submission-type">@messages("hub.dashboard.subheading2")</a></h2>
         <p class="govuk-body">@messages("hub.dashboard.paragraph3")</p>
