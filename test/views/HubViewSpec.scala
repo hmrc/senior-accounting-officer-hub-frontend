@@ -63,33 +63,47 @@ class HubViewSpec extends ViewSpecBase[HubView] {
 
     doc.createTestWithAccountHomeCards()
 
-    doc.createTestWithParagraphsWithinAccountHomeCards()
+    doc.createTestWithParagraphsWithinAccountHomeCards(cardParagraphs)
 
-    doc.createTestWithSubHeadingsWithinAccountHomeCards()
+    doc.createTestWithSubHeadingsWithinAccountHomeCards(cardSubheadings)
 
   }
 
   extension (doc: Document) {
     def createTestWithAccountHomeCards(): Unit = {
+      val homeCards = doc.getMainContent.select(".account-home-card")
+
       "must have 2 account home cards" in {
-        doc.select(".account-home-card").size() mustBe 2
+        homeCards.size() mustBe 2
       }
     }
 
-    def createTestWithParagraphsWithinAccountHomeCards(): Unit = {
+    def createTestWithParagraphsWithinAccountHomeCards(paragraphs : Seq[String]): Unit = {
+      val homeCardParagraphs = doc.getMainContent.select(".account-home-card p")
+
       "must have 2 paragraphs within account home cards" in {
-        doc.select(".account-home-card p").size() mustBe 2
-        doc.select(".account-home-card p").get(0).text() mustBe cardParagraphs(0)
-        doc.select(".account-home-card p").get(1).text() mustBe cardParagraphs(1)
+        homeCardParagraphs.size() mustBe paragraphs.length
       }
+
+      paragraphs.zipWithIndex.foreach((paragraph, i) => {
+        s"must have paragraph '$paragraph'" in {
+          homeCardParagraphs.get(i).text mustBe paragraph
+        }
+      })
     }
 
-    def createTestWithSubHeadingsWithinAccountHomeCards(): Unit = {
+    def createTestWithSubHeadingsWithinAccountHomeCards(subheadings : Seq[String]): Unit = {
+      val homeCardSubheadings = doc.getMainContent.select(".account-home-card h2")
+
       "must have 2 subheadings within account home cards" in {
-        doc.select(".account-home-card h2").size() mustBe 2
-        doc.select(".account-home-card h2").get(0).text() mustBe cardSubheadings(0)
-        doc.select(".account-home-card h2").get(1).text() mustBe cardSubheadings(1)
+        homeCardSubheadings.size() mustBe subheadings.length
       }
+
+      subheadings.zipWithIndex.foreach((subheading, i) => {
+        s"must have subheadings '$subheading'" in {
+          homeCardSubheadings.get(i).text mustBe subheading
+        }
+      })
     }
   }
 }

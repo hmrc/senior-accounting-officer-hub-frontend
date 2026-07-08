@@ -34,13 +34,19 @@
         <h1 class="govuk-heading-l">@messages("hub.dashboard.heading")</h1>
         <p class="govuk-body-l">@messages("hub.dashboard.paragraph1", referenceID)</p>
     </div>
+
     <div class="account-home-card govuk-!-margin-bottom-5">
         <h2 class="govuk-heading-m"><a class="govuk-link" href="@appConfig.templateGuidance">@messages("hub.dashboard.subheading1")</a></h2>
         <p class="govuk-body">@messages("hub.dashboard.paragraph2")</p>
     </div>
+
     <div class="account-home-card govuk-!-margin-bottom-5">
         <h2 class="govuk-heading-m"><a class="govuk-link" href="@appConfig.submissionFrontendHostAndContext/submission-type">@messages("hub.dashboard.subheading2")</a></h2>
-        <p class="govuk-body">@messages("hub.dashboard.paragraph3")<br>@messages("hub.dashboard.paragraph4")</p>
+        <p class="govuk-body">
+            @messages("hub.dashboard.paragraph3")
+            <br>
+            @messages("hub.dashboard.paragraph4")
+        </p>
     </div>
 
 }
