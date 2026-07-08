@@ -4,10 +4,9 @@ hub.dashboard.title = Senior Accounting Officer notification and certificate
 hub.dashboard.heading = Senior Accounting Officer notification and certificate
 hub.dashboard.subheading1 = Get a submission template
 hub.dashboard.subheading2 = Make a submission
-hub.dashboard.caption = {0}
 hub.dashboard.paragraph1 = Reference ID: {0}
 hub.dashboard.paragraph2 = Download a template to prepare your submission and read guidance on how to complete and submit the template.
-hub.dashboard.paragraph3 = You can start a new submission. Submit a notification, a certificate, or both at the same time.
+hub.dashboard.paragraph3 = You can start a new submission. \n Submit a notification, a certificate, or both at the same time.
 
 hub.dashboard.companyDetailsTable.row.companyName.label = Company name
 hub.dashboard.companyDetailsTable.row.referenceId.label = ReferenceID
