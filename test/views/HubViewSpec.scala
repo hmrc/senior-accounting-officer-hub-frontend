@@ -78,7 +78,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
       }
     }
 
-    def createTestWithParagraphsWithinAccountHomeCards(paragraphs : Seq[String]): Unit = {
+    def createTestWithParagraphsWithinAccountHomeCards(paragraphs: Seq[String]): Unit = {
       val homeCardParagraphs = doc.getMainContent.select(".account-home-card p")
 
       "must have 2 paragraphs within account home cards" in {
@@ -92,7 +92,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
       })
     }
 
-    def createTestWithSubHeadingsWithinAccountHomeCards(subheadings : Seq[String]): Unit = {
+    def createTestWithSubHeadingsWithinAccountHomeCards(subheadings: Seq[String]): Unit = {
       val homeCardSubheadings = doc.getMainContent.select(".account-home-card h2")
 
       "must have 2 subheadings within account home cards" in {
