@@ -11,3 +11,11 @@
 
 # Add all the application routes to the prod.routes file
 ->         /                          prod.Routes
+
+GET        /senior-accounting-officer/test-only/protected-proxy/*path      controllers.testOnly.BackendProxyController.proxy(path)
++nocsrf
+POST       /senior-accounting-officer/test-only/protected-proxy/*path      controllers.testOnly.BackendProxyController.proxy(path)
++nocsrf
+PUT        /senior-accounting-officer/test-only/protected-proxy/*path      controllers.testOnly.BackendProxyController.proxy(path)
+
+GET        /senior-accounting-officer/test-only/authorization              controllers.testOnly.SessionCookieExtractorController.getAuthorization
