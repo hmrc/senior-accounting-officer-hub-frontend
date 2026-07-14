@@ -48,6 +48,8 @@ class AppConfig @Inject() (servicesConfig: ServicesConfig, config: Configuration
 
   def templateGuidance: String = s"$submissionFrontendHostAndContext/template-guidance"
 
+  def backendBaseUrl: String = servicesConfig.baseUrl("senior-accounting-officer")
+
   private def getValue(key: String): String =
     sys.props
       .get(key)
