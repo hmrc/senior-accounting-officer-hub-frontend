@@ -17,16 +17,13 @@
 package views
 
 import base.ViewSpecBase
-import config.AppConfig
-import models.{CertificationDetails, CompanyDetails, NotificationDetails}
 import org.jsoup.Jsoup
-import org.jsoup.nodes.{Document, Element}
+import org.jsoup.nodes.Document
 import org.scalatest.compatible.Assertion
 import play.api.Application
 import play.api.inject.guice.GuiceApplicationBuilder
+import views.HubViewSpec.*
 import views.html.HubView
-
-import java.time.LocalDate
 
 class HubViewSpec extends ViewSpecBase[HubView] {
 
@@ -37,192 +34,103 @@ class HubViewSpec extends ViewSpecBase[HubView] {
       .configure("senior-accounting-officer-submission-frontend.host" -> testSubmissionFrontendHost)
       .build()
 
-  private val testDate = LocalDate.of(2025, 7, 30)
-
-  val companyDetails: CompanyDetails = CompanyDetails(
-    companyName = "Fake Company Ltd",
-    referenceId = "fakexxx1234",
-    accountingPeriodStartDate = testDate,
-    accountingPeriodEndDate = testDate
-  )
-
-  val notificationDetails: NotificationDetails = NotificationDetails(
-    dueDate = testDate
-  )
-
-  val certificationDetails: CertificationDetails = CertificationDetails(
-    dueDate = testDate
-  )
-
   val doc: Document =
-    Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
-  val mainContent: Element = doc.getMainContent
-
+    Jsoup.parse(SUT("Fake Company Ltd", "fakexxx1234").toString)
   "HubView" must {
 
-    mustHaveCorrectPageTitle(document = doc, title = "Senior Accounting Officer notification and certificate")
+    doc.createTestsWithStandardPageElements(
+      pageTitle = pageTitle,
+      pageHeading = pageHeading,
+      showIsThisPageNotWorkingProperlyLink = true,
+      hasError = false
+    )
 
-    mustHaveCorrectPageHeading(document = doc, expectedText = "Senior Accounting Officer notification and certificate")
+    doc.createTestsWithLargeCaption(
+      pageCaption
+    )
 
-    mustShowIsThisPageNotWorkingProperlyLink(document = doc)
+    doc
+      .select(linkLocator1)
+      .get(0)
+      .createTestWithLink(linkText, linkUrl)
 
-    "must have correct correct number of sections" in {
-      val sections = mainContent.getElementsByAttributeValueContaining("id", "section-")
-      sections.size() mustBe 6
-    }
+    doc
+      .select(linkLocator2)
+      .get(0)
+      .createTestWithLink(linkText2, linkUrl2)
 
-    "must have correct content for company details section" in {
-      val rows = mainContent.getElementById("section-company-details").select("div.govuk-summary-list__row")
-      rows.size() mustBe 3
-      validateRow(row = rows.get(0), keyText = "Company name", actionText = "Fake Company Ltd", expectedHref = None)
-      validateRow(row = rows.get(1), keyText = "ReferenceID", actionText = "fakexxx1234", expectedHref = None)
-      validateRow(
-        row = rows.get(2),
-        keyText = "Accounting period",
-        actionText = "30 July 2025 to 30 July 2025",
-        expectedHref = None
-      )
-    }
+    doc.createTestsWithParagraphs(paragraphs)
 
-    "must have correct content for notification section" in {
-      AppConfig.setValue("senior-accounting-officer-submission-frontend.host", "submission-url")
-      val doc: Document =
-        Jsoup.parse(SUT(companyDetails, notificationDetails, certificationDetails).toString)
-      val mainContent: Element = doc.getMainContent
-      val rows = mainContent.getElementById("section-notification").select("div.govuk-summary-list__row")
-      rows.size() mustBe 5
+    doc.createTestWithAccountHomeCards()
 
-      validateRow(
-        row = rows.get(0),
-        keyText = "Status",
-        actionText = "DUE",
-        expectedHref = None
-      )
-      validateRow(row = rows.get(1), keyText = "Due date", actionText = "30 July 2025", expectedHref = None)
-      validateRow(
-        row = rows.get(2),
-        keyText = "Template",
-        actionText = "Download",
-        actionHiddenText = Some("the notification template"),
-        expectedHref = Some("submission-url/senior-accounting-officer/submission/download/notification/template")
-      )
-      validateRow(
-        row = rows.get(3),
-        keyText = "Template guidance",
-        actionText = "Read",
-        actionHiddenText = Some("the notification template guidance"),
-        expectedHref = Some("submission-url/senior-accounting-officer/submission/template-guidance")
-      )
-      validateRow(
-        row = rows.get(4),
-        keyText = "Submission history",
-        actionText = "Not present yet",
-        expectedHref = None
-      )
-    }
+    doc.createTestWithParagraphsWithinAccountHomeCards(cardParagraphs)
 
-    "must have correct content for certification section" in {
-      val rows = mainContent.getElementById("section-certification").select("div.govuk-summary-list__row")
-      rows.size() mustBe 5
+    doc.createTestWithSubHeadingsWithinAccountHomeCards(cardSubheadings)
 
-      validateRow(
-        row = rows.get(0),
-        keyText = "Status",
-        actionText = "DUE",
-        expectedHref = None
-      )
-      validateRow(row = rows.get(1), keyText = "Due date", actionText = "30 July 2025", expectedHref = None)
-      validateRow(
-        row = rows.get(2),
-        keyText = "Template",
-        actionText = "Download",
-        actionHiddenText = Some("the certification template"),
-        expectedHref = None
-      )
-      validateRow(
-        row = rows.get(3),
-        keyText = "Template guidance",
-        actionText = "Read",
-        actionHiddenText = Some("the certification template guidance"),
-        expectedHref = None
-      )
-      validateRow(
-        row = rows.get(4),
-        keyText = "Submission history",
-        actionText = "Not present yet",
-        expectedHref = None
-      )
-    }
-
-    "must have correct linkText in submit notification link section" in {
-      val sectionLink =
-        mainContent
-          .getElementById("section-submit-notification-link")
-          .getElementsByClass("govuk-link")
-      sectionLink.size() mustBe 1
-      sectionLink.get(0).text() mustBe "Submit a notification"
-      sectionLink
-        .get(0)
-        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/submission-type"
-    }
-
-    "must have correct linkText in submit certificate link section" in {
-      val sectionLink =
-        mainContent
-          .getElementById("section-submit-certificate-link")
-          .getElementsByClass("govuk-link")
-      sectionLink.size() mustBe 1
-      sectionLink.get(0).text() mustBe "Submit a certificate"
-      sectionLink
-        .get(0)
-        .attr("href") mustBe s"$testSubmissionFrontendHost/senior-accounting-officer/submission/submission-type"
-    }
-
-    "must have correct links and text in final link section" in {
-      val sectionLink =
-        mainContent
-          .getElementById("section-final-links")
-          .getElementsByClass("govuk-link")
-
-      sectionLink.size() mustBe 2
-      sectionLink.get(0).text() mustBe "Manage contact details"
-      sectionLink.get(1).text() mustBe "Manage company details"
-    }
   }
 
-  def validateRow(
-      row: Element,
-      keyText: String,
-      actionText: String,
-      actionHiddenText: Option[String] = None,
-      expectedHref: Option[String] = None
-  ): Unit = {
-    val rowKey    = row.select("dt.govuk-summary-list__key")
-    val rowAction = row.select("dd.govuk-summary-list__actions")
-    rowKey.size() mustBe 1
-    rowAction.size() mustBe 1
-    withClue("row keyText mismatch:\n") {
-      rowKey.get(0).text() mustBe keyText
-    }
-    val actionElement = rowAction.get(0)
-    actionHiddenText.foreach(hiddenText => {
-      val maybeHiddenElement   = Option(actionElement.getElementsByClass("govuk-visually-hidden"))
-      val maybeHiddenTextFound = maybeHiddenElement.map(_.text())
-      withClue("row actionHiddenText mismatch:\n") {
-        maybeHiddenTextFound mustBe Some(hiddenText)
+  extension (doc: Document) {
+    def createTestWithAccountHomeCards(): Unit = {
+      val homeCards = doc.getMainContent.select(".account-home-card")
+
+      "must have 2 account home cards" in {
+        homeCards.size() mustBe 2
       }
-      maybeHiddenElement.map(_.remove())
-    })
-    val actionTextFound = actionElement.text
-    withClue("row actionText mismatch:\n") {
-      actionTextFound mustBe actionText
     }
-    expectedHref.foreach {
-      val anchor = row.select(".govuk-link")
-      val href   = anchor.attr("href")
-      withClue("href url mismatch:\n") {
-        href mustBe _
+
+    def createTestWithParagraphsWithinAccountHomeCards(paragraphs: Seq[String]): Unit = {
+      val homeCardParagraphs = doc.getMainContent.select(".account-home-card p")
+
+      "must have 2 paragraphs within account home cards" in {
+        homeCardParagraphs.size() mustBe paragraphs.length
       }
+
+      paragraphs.zipWithIndex.foreach((paragraph, i) => {
+        s"must have paragraph '$paragraph'" in {
+          homeCardParagraphs.get(i).text mustBe paragraph
+        }
+      })
+    }
+
+    def createTestWithSubHeadingsWithinAccountHomeCards(subheadings: Seq[String]): Unit = {
+      val homeCardSubheadings = doc.getMainContent.select(".account-home-card h2")
+
+      "must have 2 subheadings within account home cards" in {
+        homeCardSubheadings.size() mustBe subheadings.length
+      }
+
+      subheadings.zipWithIndex.foreach((subheading, i) => {
+        s"must have subheadings '$subheading'" in {
+          homeCardSubheadings.get(i).text mustBe subheading
+        }
+      })
     }
   }
+}
+
+object HubViewSpec {
+  val pageTitle               = "Senior Accounting Officer notification and certificate"
+  val pageHeading             = "Senior Accounting Officer notification and certificate"
+  val pageCaption             = "Fake Company Ltd"
+  val linkLocator1            = ".account-home-card:nth-of-type(2)"
+  val linkLocator2            = ".account-home-card:nth-of-type(3)"
+  val linkText                = "Get a submission template"
+  val linkText2               = "Make a submission"
+  val linkUrl                 = "test-host-config/senior-accounting-officer/submission/template-guidance"
+  val linkUrl2                = "test-host-config/senior-accounting-officer/submission/submission-type"
+  val paragraphs: Seq[String] = Seq(
+    "Reference ID: fakexxx1234",
+    "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
+    "You can start a new submission. Submit a notification, a certificate, or both at the same time."
+  )
+
+  val cardParagraphs: Seq[String] = Seq(
+    "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
+    "You can start a new submission. Submit a notification, a certificate, or both at the same time."
+  )
+
+  val cardSubheadings: Seq[String] = Seq(
+    "Get a submission template",
+    "Make a submission"
+  )
 }

@@ -57,8 +57,3 @@ class AppConfig @Inject() (servicesConfig: ServicesConfig, config: Configuration
         config.get[String](key)
       )
 }
-
-object AppConfig {
-  def setValue(key: String, value: String): Unit =
-    sys.props.addOne((key, value)): Unit
-}
