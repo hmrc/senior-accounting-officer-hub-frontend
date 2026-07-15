@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package config
+package controllers
 
-import com.google.inject.AbstractModule
-import controllers.actions.*
+import play.api.i18n.I18nSupport
+import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import views.html.UnauthorisedView
 
-import java.time.{Clock, ZoneOffset}
+import javax.inject.Inject
 
-class Module extends AbstractModule {
+class NoEnrollmentController @Inject() (
+    val controllerComponents: MessagesControllerComponents,
+    view: UnauthorisedView
+) extends FrontendBaseController
+    with I18nSupport {
 
-  override def configure(): Unit = {
-
-    bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
-    bind(classOf[EnsureSubscriptionAction]).to(classOf[EnsureSubscriptionActionImpl]).asEagerSingleton()
-
-    bind(classOf[AppConfig]).asEagerSingleton()
-
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
-
+  def onPageLoad(): Action[AnyContent] = Action { implicit request =>
+    Ok(view())
   }
 }

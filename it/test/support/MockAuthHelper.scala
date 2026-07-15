@@ -16,13 +16,15 @@
 
 package support
 
+import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
+import play.api.http.HeaderNames
 
 object MockAuthHelper {
 
   val authSession: Map[String, String] = Map("authToken" -> "mock-bearer-token")
-  
+
   val authoriseUri: String = "/auth/authorise"
 
   def mockAuthOk(): StubMapping =
@@ -31,10 +33,31 @@ object MockAuthHelper {
         .willReturn(
           aResponse()
             .withHeader("content-type", "application/json")
-            .withBody(
-              """{
-                | "internalId": "testId"
-                |}""".stripMargin)
+            .withBody(s"""{
+            | "internalId": "$testId",
+            | "allEnrolments" : [{
+            |   "key":"HMRC-DSAO-ORG",
+            |   "identifiers": [{
+            |     "key":"",
+            |     "value": "$testSubscriptionId"
+            |   }]
+            | }]
+            |}""".stripMargin)
+            .withStatus(200)
+        )
+    )
+
+  def mockAuthNoEnrolments(): StubMapping =
+    stubFor(
+      post(urlEqualTo(authoriseUri))
+        .willReturn(
+          aResponse()
+            .withHeader(HeaderNames.CONTENT_TYPE, "application/json")
+            .withHeader(HeaderNames.AUTHORIZATION, testBearerToken)
+            .withBody(s"""{
+                 | "internalId": "$testId",
+                 | "allEnrolments" : []
+                 |}""".stripMargin)
             .withStatus(200)
         )
     )
@@ -52,4 +75,8 @@ object MockAuthHelper {
 
   def verifyAuthWasCalled(times: Int = 1): Unit =
     verify(times, postRequestedFor(urlEqualTo(authoriseUri)))
+
+  val testBearerToken    = "mock-bearer-token"
+  val testId             = "testId"
+  val testSubscriptionId = "testSubscriptionId"
 }

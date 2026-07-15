@@ -14,23 +14,24 @@
  * limitations under the License.
  */
 
-package config
+package models
 
-import com.google.inject.AbstractModule
-import controllers.actions.*
+import play.api.libs.json.*
+import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 
-import java.time.{Clock, ZoneOffset}
+import java.time.Instant
 
-class Module extends AbstractModule {
+final case class UserAnswers(
+    `_id`: String,
+    subscription: SaoSubscription,
+    data: JsObject = Json.obj(),
+    lastUpdated: Instant = Instant.now
+)
 
-  override def configure(): Unit = {
+object UserAnswers {
 
-    bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
-    bind(classOf[EnsureSubscriptionAction]).to(classOf[EnsureSubscriptionActionImpl]).asEagerSingleton()
+  given Format[Instant] = MongoJavatimeFormats.instantFormat
 
-    bind(classOf[AppConfig]).asEagerSingleton()
+  given format: OFormat[UserAnswers] = Json.format
 
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
-
-  }
 }

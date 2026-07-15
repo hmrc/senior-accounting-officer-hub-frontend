@@ -16,36 +16,47 @@
 
 package controllers
 
-import base.SpecBase
-import controllers.actions.{FakeIdentifierAction, IdentifierAction}
+import base.AuthenticatedControllerSpecBase
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.bind
-import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.i18n.Messages
+import play.api.mvc.AnyContentAsEmpty
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
+import views.html.HubView
 
-class IndexControllerSpec extends SpecBase {
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .overrides(bind[IdentifierAction].to[FakeIdentifierAction])
-      .build()
+class IndexControllerSpec extends AuthenticatedControllerSpecBase {
 
-  private val fakeRequest = FakeRequest("GET", "/")
-
-  private val controller = app.injector.instanceOf[IndexController]
+  given request: FakeRequest[AnyContentAsEmpty.type] = FakeRequest("GET", "/")
 
   "GET /" must {
     "return 200" in {
-      val result = controller.onPageLoad()(fakeRequest)
-      status(result) mustBe Status.OK
+      val app = applicationBuilder(userAnswers).build()
+
+      running(app) {
+        val controller = app.injector.instanceOf[IndexController]
+
+        val result = controller.onPageLoad()(request)
+
+        status(result) mustBe Status.OK
+      }
     }
 
     "return HTML" in {
-      val result = controller.onPageLoad()(fakeRequest)
-      contentType(result) mustBe Some("text/html")
-      charset(result) mustBe Some("utf-8")
+      val app = applicationBuilder(userAnswers).build()
+
+      running(app) {
+        val controller = app.injector.instanceOf[IndexController]
+
+        val result = controller.onPageLoad()(request)
+
+        val view       = app.injector.instanceOf[HubView]
+        given Messages = messages(app)
+
+        contentType(result) mustBe Some("text/html")
+        charset(result) mustBe Some("utf-8")
+        contentAsString(result) mustBe view(companyName, testSaoSubscriptionId).toString
+      }
     }
   }
 }

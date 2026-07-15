@@ -19,8 +19,8 @@ package support
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
-import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
 import org.scalatest.concurrent.{IntegrationPatience, ScalaFutures}
+import org.scalatest.{BeforeAndAfterAll, BeforeAndAfterEach}
 import org.scalatestplus.play.PlaySpec
 import org.scalatestplus.play.guice.GuiceOneServerPerSuite
 import play.api.Application
@@ -63,12 +63,15 @@ abstract class ISpecBase
 
   def additionalConfigs: Map[String, Any] = Map.empty
   private def configs: Map[String, Any]   = Map(
-    "microservice.services.auth.port" -> wireMockPort.toString,
-    "play.ws.followRedirects" -> "false"
+    "microservice.services.auth.port"                      -> wireMockPort.toString,
+    "microservice.services.senior-accounting-officer.port" -> wireMockPort.toString,
+    "play.ws.followRedirects"                              -> "false"
   ) ++ additionalConfigs
 
-  override def fakeApplication(): Application =
-    GuiceApplicationBuilder()
+  protected def applicationBuilder: GuiceApplicationBuilder = GuiceApplicationBuilder()
+
+  final override def fakeApplication(): Application =
+    applicationBuilder
       .configure(configs)
       .build()
 

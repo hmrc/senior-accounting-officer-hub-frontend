@@ -18,22 +18,14 @@ package controllers.auth
 
 import base.SpecBase
 import config.AppConfig
-import controllers.actions.{FakeIdentifierAction, IdentifierAction}
 import org.scalatest.wordspec.AnyWordSpec
-import play.api.Application
 import play.api.http.Status
-import play.api.inject.bind
-import play.api.inject.guice.GuiceApplicationBuilder
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 
 import java.net.URLEncoder
 
 class AuthControllerSpec extends SpecBase {
-  override def fakeApplication(): Application =
-    new GuiceApplicationBuilder()
-      .overrides(bind[IdentifierAction].to[FakeIdentifierAction])
-      .build()
 
   private val fakeRequest = FakeRequest("GET", "/")
 
