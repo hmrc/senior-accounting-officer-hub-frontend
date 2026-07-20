@@ -8,5 +8,6 @@ GET        /account/sign-out                            controllers.auth.AuthCon
 GET        /account/signed-out                          controllers.auth.SignedOutController.onPageLoad()
 
 GET        /unauthorised                                controllers.UnauthorisedController.onPageLoad()
+GET        /not-enrolled                                controllers.NoEnrollmentController.onPageLoad()
 
 GET        /                                            controllers.IndexController.onPageLoad()

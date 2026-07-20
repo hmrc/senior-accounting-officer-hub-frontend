@@ -18,4 +18,5 @@ package requests
 
 import play.api.mvc.{Request, WrappedRequest}
 
-final case class IdentifierRequest[A](request: Request[A], userId: String) extends WrappedRequest[A](request)
+final case class IdentifierRequest[A](request: Request[A], userId: String, saoSubscriptionId: String)
+    extends WrappedRequest[A](request)

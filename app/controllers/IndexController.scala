@@ -16,7 +16,7 @@
 
 package controllers
 
-import controllers.actions.IdentifierAction
+import controllers.actions.{EnsureSubscriptionAction, IdentifierAction}
 import models.CompanyDetails
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -28,16 +28,18 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class IndexController @Inject() (
     identify: IdentifierAction,
+    ensureSubscription: EnsureSubscriptionAction,
     mcc: MessagesControllerComponents,
     hubView: HubView
 ) extends FrontendController(mcc)
     with I18nSupport {
 
-  def onPageLoad(): Action[AnyContent] = identify { implicit request =>
+  def onPageLoad(): Action[AnyContent] = (identify andThen ensureSubscription) { implicit request =>
     val companyDetails = CompanyDetails(
-      companyName = "Fake Company Ltd",
-      referenceId = "fakexxx1234"
+      companyName = request.userAnswers.subscription.nominatedCompany.name,
+      referenceId = request.saoSubscriptionId
     )
+
     Ok(hubView(companyDetails.companyName, companyDetails.referenceId))
   }
 

@@ -14,18 +14,34 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend
+package controllers.actions
 
-import org.jsoup.Jsoup
-import play.api.http.{HeaderNames, Status}
-import support.{ISpecBase, MockAuthHelper, SessionCookieBaker}
-import MockAuthHelper.authSession
 import config.AppConfig
+import controllers.actions.AuthActionISpec.*
+import play.api.http.{HeaderNames, Status}
+import play.api.inject.guice.GuiceApplicationBuilder
+import play.api.libs.ws.readableAsString
+import play.api.mvc.Results
+import support.MockAuthHelper.*
+import support.{ISpecBase, MockAuthHelper, SessionCookieBaker}
 
 class AuthActionISpec extends ISpecBase {
 
-  val appConfig = app.injector.instanceOf[AppConfig]
-  val targetUrl = s"$baseUrl/senior-accounting-officer"
+  override def applicationBuilder: GuiceApplicationBuilder =
+    GuiceApplicationBuilder()
+      .appRoutes { app =>
+        val identifierAction = app.injector.instanceOf[IdentifierAction]
+
+        { case ("GET", `testPath`) =>
+          identifierAction { request =>
+            Results.Ok(testSuccessBody(request.userId, request.saoSubscriptionId))
+          }
+        }
+      }
+
+  def appConfig: AppConfig = app.injector.instanceOf[AppConfig]
+
+  def targetUrl = s"$baseUrl$testPath"
 
   "An endpoint with Auth Action" when {
     "Auth is missing" must {
@@ -44,8 +60,8 @@ class AuthActionISpec extends ISpecBase {
       }
     }
 
-    "Auth is successful" must {
-      "respond with a 200" in {
+    "Auth is successful and returned an HMRC-DSAO-ORG Enrolment" must {
+      "pass the action successfully" in {
         MockAuthHelper.mockAuthOk()
 
         val response =
@@ -60,9 +76,27 @@ class AuthActionISpec extends ISpecBase {
 
         MockAuthHelper.verifyAuthWasCalled()
         response.status mustBe Status.OK
-        Option(
-          Jsoup.parse(response.body).selectFirst("h1").text
-        ).get mustBe "Senior Accounting Officer notification and certificate"
+        response.body[String] mustBe testSuccessBody(testId, testSubscriptionId)
+      }
+    }
+
+    "Auth is successful but did not return an HMRC-DSAO-ORG Enrolment" must {
+      "respond with a 303" in {
+        MockAuthHelper.mockAuthNoEnrolments()
+
+        val response =
+          wsClient
+            .url(targetUrl)
+            .withHttpHeaders(
+              HeaderNames.COOKIE -> SessionCookieBaker.bakeSessionCookie(authSession),
+              "Csrf-Token"       -> "nocheck"
+            )
+            .get()
+            .futureValue
+
+        MockAuthHelper.verifyAuthWasCalled()
+        response.status mustBe Status.SEE_OTHER
+        response.header(HeaderNames.LOCATION) mustBe Some(controllers.routes.NoEnrollmentController.onPageLoad().url)
       }
     }
 
@@ -85,5 +119,13 @@ class AuthActionISpec extends ISpecBase {
       }
     }
   }
+
+}
+
+object AuthActionISpec {
+  val testPath = "/test-identifier-action"
+
+  def testSuccessBody(userId: String, saoSubscriptionId: String) =
+    s"Action Passed Successfully $userId, $saoSubscriptionId"
 
 }

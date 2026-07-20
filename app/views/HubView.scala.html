@@ -21,7 +21,7 @@
 @this(appConfig: AppConfig, layout: templates.Layout)
 
 @(
-  companyName: String, referenceID: String
+  companyName: String, saoSubscriptionId: String
 )(using request: RequestHeader, messages: Messages)
 
 <link href='@controllers.routes.Assets.versioned("stylesheets/application.css")' media="all" rel="stylesheet" type="text/css" />
@@ -32,7 +32,7 @@
     <div>
         <span class="govuk-caption-l">@companyName</span>
         <h1 class="govuk-heading-l">@messages("hub.dashboard.heading")</h1>
-        <p class="govuk-body-l">@messages("hub.dashboard.paragraph1", referenceID)</p>
+        <p class="govuk-body-l">@messages("hub.dashboard.paragraph1", saoSubscriptionId)</p>
     </div>
 
     <div class="account-home-card govuk-!-margin-bottom-5">

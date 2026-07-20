@@ -14,23 +14,19 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend
+package controllers.actions
 
-import play.api.http.Status
-import support.{ISpecBase, MockAuthHelper}
+import models.UserAnswers
+import requests.{DataRequest, IdentifierRequest}
 
-class HealthISpec extends ISpecBase {
+import scala.concurrent.{ExecutionContext, Future}
 
-  "service health endpoint" must {
-    "respond with 200 status" in {
-      val response =
-        wsClient
-          .url(s"$baseUrl/ping/ping")
-          .get()
-          .futureValue
+class FakeEnsureSubscriptionAction(
+    dataToReturn: UserAnswers
+) extends EnsureSubscriptionAction {
+  override protected def transform[A](request: IdentifierRequest[A]): Future[DataRequest[A]] =
+    Future(DataRequest(request.request, request.userId, request.saoSubscriptionId, dataToReturn))
 
-      response.status mustBe Status.OK
-      MockAuthHelper.verifyAuthWasCalled(times = 0)
-    }
-  }
+  override protected implicit val executionContext: ExecutionContext =
+    scala.concurrent.ExecutionContext.Implicits.global
 }

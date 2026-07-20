@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend
-
+import config.AppConfig
 import org.jsoup.Jsoup
 import play.api.http.{HeaderNames, Status}
-import support.{ISpecBase, MockAuthHelper, SessionCookieBaker}
-import MockAuthHelper.authSession
-import config.AppConfig
+import support.MockAuthHelper.authSession
+import support.{ISpecBase, MockAuthHelper, MockGetSubscriptionHelper, SessionCookieBaker}
 
 class IndexISpec extends ISpecBase {
 
@@ -30,6 +28,7 @@ class IndexISpec extends ISpecBase {
   "Index endpoint" must {
     "respond with a 200" in {
       MockAuthHelper.mockAuthOk()
+      MockGetSubscriptionHelper.mockGetSubscriptionOk()
 
       val response =
         wsClient

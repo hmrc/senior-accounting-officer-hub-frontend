@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package controllers.auth
+package controllers
 
 import base.SpecBase
 import org.scalatest.wordspec.AnyWordSpec
@@ -22,18 +22,17 @@ import play.api.http.Status
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import views.html.auth.SignedOutView
+import views.html.UnauthorisedView
 
-class SignedOutControllerSpec extends SpecBase {
+class NoEnrollmentControllerSpec extends SpecBase {
 
   private val fakeRequest = FakeRequest("GET", "/")
 
-  private val controller = app.injector.instanceOf[SignedOutController]
-  private val view       = app.injector.instanceOf[SignedOutView]
-
+  private val controller         = app.injector.instanceOf[NoEnrollmentController]
+  private val view               = app.injector.instanceOf[UnauthorisedView]
   private def messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
 
-  "Signed out Controller" must {
+  "NotEnrolled Controller" must {
     "return 200" in {
       val result = controller.onPageLoad()(fakeRequest)
       status(result) mustBe Status.OK

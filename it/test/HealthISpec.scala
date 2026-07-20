@@ -14,23 +14,21 @@
  * limitations under the License.
  */
 
-package config
+import play.api.http.Status
+import support.{ISpecBase, MockAuthHelper}
 
-import com.google.inject.AbstractModule
-import controllers.actions.*
+class HealthISpec extends ISpecBase {
 
-import java.time.{Clock, ZoneOffset}
+  "service health endpoint" must {
+    "respond with 200 status" in {
+      val response =
+        wsClient
+          .url(s"$baseUrl/ping/ping")
+          .get()
+          .futureValue
 
-class Module extends AbstractModule {
-
-  override def configure(): Unit = {
-
-    bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
-    bind(classOf[EnsureSubscriptionAction]).to(classOf[EnsureSubscriptionActionImpl]).asEagerSingleton()
-
-    bind(classOf[AppConfig]).asEagerSingleton()
-
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
-
+      response.status mustBe Status.OK
+      MockAuthHelper.verifyAuthWasCalled(times = 0)
+    }
   }
 }

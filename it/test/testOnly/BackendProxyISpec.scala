@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package uk.gov.hmrc.senioraccountingofficerhubfrontend.testOnly
+package testOnly
 
 import com.github.tomakehurst.wiremock.client.WireMock.*
 import org.apache.pekko.util.ByteString
 import play.api.http.{HeaderNames, MimeTypes}
 import play.api.libs.ws.{BodyWritable, InMemoryBody}
-import support.ISpecBase
 import uk.gov.hmrc.http.HeaderCarrier
 import BackendProxyISpec.*
+import support.ISpecBase
 
 class BackendProxyISpec extends ISpecBase {
 

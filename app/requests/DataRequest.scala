@@ -14,23 +14,14 @@
  * limitations under the License.
  */
 
-package config
+package requests
 
-import com.google.inject.AbstractModule
-import controllers.actions.*
+import models.UserAnswers
+import play.api.mvc.{Request, WrappedRequest}
 
-import java.time.{Clock, ZoneOffset}
-
-class Module extends AbstractModule {
-
-  override def configure(): Unit = {
-
-    bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
-    bind(classOf[EnsureSubscriptionAction]).to(classOf[EnsureSubscriptionActionImpl]).asEagerSingleton()
-
-    bind(classOf[AppConfig]).asEagerSingleton()
-
-    bind(classOf[Clock]).toInstance(Clock.systemDefaultZone.withZone(ZoneOffset.UTC))
-
-  }
-}
+case class DataRequest[A](
+    request: Request[A],
+    userId: String,
+    saoSubscriptionId: String,
+    userAnswers: UserAnswers
+) extends WrappedRequest[A](request)
