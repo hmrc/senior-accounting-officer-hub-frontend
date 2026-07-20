@@ -49,8 +49,7 @@ class GetSubscriptionConnectorISpec extends ISpecBase {
         val result = connector.getSubscription().futureValue
 
         result.status mustBe expectedStatus
-        if expectedStatus == 204 then result.body mustBe ""
-        else result.body mustBe testResponse
+        result.body mustBe testResponse
 
         verify(
           1,

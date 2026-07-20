@@ -29,6 +29,7 @@ import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
+import scala.util.control.NonFatal
 
 import java.time.Clock
 import javax.inject.Inject
@@ -69,10 +70,15 @@ class EnsureSubscriptionActionImpl @Inject() (
   private def getSubscription[A]()(using HeaderCarrier): Future[SaoSubscription] =
     getSubscriptionConnector.getSubscription().map {
       case HttpResponse(OK, body, _) =>
-        Try(Json.parse(body).validate[SaoSubscription].asEither).toEither.flatten.left.map { _ =>
-          logger.warn("[GetSubscription][MalformedResponse]")
-          throw new InternalServerException("GetSubscription returned a MalformedResponse")
-        }.merge
+        Try(Json.parse(body).as[SaoSubscription]).fold(
+          {
+            case NonFatal(_) =>
+              logger.warn("[GetSubscription][MalformedResponse]")
+              throw new InternalServerException("GetSubscription returned a MalformedResponse")
+            case fatal => throw fatal
+          },
+          identity
+        )
       case HttpResponse(INTERNAL_SERVER_ERROR, _, _) =>
         logger.warn(s"[GetSubscription][INTERNAL_SERVER_ERROR]")
         throw new InternalServerException(s"GetSubscription returned 500")
