@@ -16,6 +16,7 @@
 
 package repositories
 
+import config.AppConfig
 import models.UserAnswers
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.*
@@ -28,22 +29,28 @@ import uk.gov.hmrc.mongo.play.json.formats.MongoJavatimeFormats
 import scala.concurrent.{ExecutionContext, Future}
 
 import java.time.{Clock, Instant}
+import java.util.concurrent.TimeUnit
 import javax.inject.{Inject, Singleton}
 
 @Singleton
 class SessionRepository @Inject() (
     mongoComponent: MongoComponent,
+    appConfig: AppConfig,
     clock: Clock
 )(using ec: ExecutionContext)
     extends PlayMongoRepository[UserAnswers](
       collectionName = "user-answers",
       mongoComponent = mongoComponent,
       domainFormat = UserAnswers.format,
-      indexes = Seq.empty
+      indexes = Seq(
+        IndexModel(
+          Indexes.ascending("lastUpdated"),
+          IndexOptions()
+            .name("lastUpdatedIdx")
+            .expireAfter(appConfig.cacheTtl, TimeUnit.SECONDS)
+        )
+      )
     ) {
-
-  // all indexes will be managed by senior-accounting-officer-submission-frontend
-  override lazy val requiresTtlIndex = false
 
   given instantFormat: Format[Instant] = MongoJavatimeFormats.instantFormat
 
