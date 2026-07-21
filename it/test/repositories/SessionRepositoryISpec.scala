@@ -16,7 +16,9 @@
 
 package repositories
 
+import config.AppConfig
 import models.{NominatedCompany, SaoSubscription, UserAnswers}
+import org.mockito.Mockito.when
 import org.mongodb.scala.model.Filters
 import org.scalactic.source.Position
 import org.scalatest.OptionValues
@@ -53,8 +55,12 @@ class SessionRepositoryISpec
   )
   private val userAnswers = UserAnswers("id", subscription, Json.obj("foo" -> "bar"), Instant.ofEpochSecond(1))
 
+  private val mockAppConfig = mock[AppConfig]
+  when(mockAppConfig.cacheTtl) thenReturn 1L
+  
   protected override val repository: SessionRepository = new SessionRepository(
     mongoComponent = mongoComponent,
+    appConfig = mockAppConfig,
     clock = stubClock
   )(using scala.concurrent.ExecutionContext.Implicits.global)
 

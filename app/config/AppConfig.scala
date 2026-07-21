@@ -25,6 +25,8 @@ import javax.inject.{Inject, Singleton}
 @Singleton
 class AppConfig @Inject() (servicesConfig: ServicesConfig, config: Configuration) {
 
+  val cacheTtl: Long = config.get[Int]("mongodb.timeToLiveInSeconds")
+
   def welshLanguageSupportEnabled: Boolean =
     config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
 
