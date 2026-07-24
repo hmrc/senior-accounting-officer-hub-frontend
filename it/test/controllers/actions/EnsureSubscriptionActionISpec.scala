@@ -216,8 +216,8 @@ object EnsureSubscriptionActionISpec {
       etmpSafeId = etmpSafeId,
       nominatedCompany = NominatedCompany(
         name = companyName,
-        crn = companyCrn,
-        utr = companyUtr
+        utr = companyUtr,
+        crn = Some(companyCrn)
       ),
       contacts = List(
         Contact(name = contact1Name, email = contact1Email, language = contact1Language, status = contact1Status),

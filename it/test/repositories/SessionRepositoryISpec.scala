@@ -50,14 +50,14 @@ class SessionRepositoryISpec
 
   val subscription: SaoSubscription = SaoSubscription(
     etmpSafeId = "etmpSafeId",
-    nominatedCompany = NominatedCompany("name", "crn", "utr"),
+    nominatedCompany = NominatedCompany(name = "name", utr = "utr", crn = Some("crn")),
     contacts = List.empty
   )
   private val userAnswers = UserAnswers("id", subscription, Json.obj("foo" -> "bar"), Instant.ofEpochSecond(1))
 
   private val mockAppConfig = mock[AppConfig]
   when(mockAppConfig.cacheTtl) thenReturn 1L
-  
+
   protected override val repository: SessionRepository = new SessionRepository(
     mongoComponent = mongoComponent,
     appConfig = mockAppConfig,

@@ -29,7 +29,7 @@ trait AuthenticatedControllerTestConstants {
 
   val subscription: SaoSubscription = SaoSubscription(
     etmpSafeId = etmpSafeId,
-    nominatedCompany = NominatedCompany(companyName, companyCrn, companyUtr),
+    nominatedCompany = NominatedCompany(companyName, companyUtr, Some(companyCrn)),
     contacts = List.empty
   )
 
