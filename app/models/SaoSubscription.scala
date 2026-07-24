@@ -29,7 +29,7 @@ object Contact {
   given OFormat[Contact] = Json.format
 }
 
-final case class NominatedCompany(name: String, crn: String, utr: String)
+final case class NominatedCompany(name: String, utr: String, crn: Option[String])
 
 object NominatedCompany {
   given OFormat[NominatedCompany] = Json.format
