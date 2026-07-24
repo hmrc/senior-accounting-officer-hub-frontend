@@ -106,6 +106,26 @@ class EnsureSubscriptionActionISpec extends ISpecBase with BeforeAndAfterEach {
 
       "getSubscription returned 200 but with a malformed response" in {
         repository.get(testId).futureValue mustBe None
+        MockGetSubscriptionHelper.mockGetSubscriptionOk(body = "{")
+
+        val result = wsClient
+          .url(targetUrl)
+          .withHttpHeaders(
+            HeaderNames.COOKIE -> SessionCookieBaker.bakeSessionCookie(authSession),
+            "Csrf-Token"       -> "nocheck"
+          )
+          .get()
+          .futureValue
+
+        result.status mustBe 500
+        result.body[String] mustBe default500ErrorTemplate
+
+        MockGetSubscriptionHelper.verifyGetSubscriptionWasCalled()
+        repository.get(testId).futureValue mustBe None
+      }
+
+      "getSubscription returned 200 but with an invalid json response" in {
+        repository.get(testId).futureValue mustBe None
         MockGetSubscriptionHelper.mockGetSubscriptionOk(body = "{}")
 
         val result = wsClient
