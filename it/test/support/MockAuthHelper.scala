@@ -38,7 +38,7 @@ object MockAuthHelper {
             | "allEnrolments" : [{
             |   "key":"HMRC-DSAO-ORG",
             |   "identifiers": [{
-            |     "key":"",
+            |     "key":"EtmpSubscriptionId",
             |     "value": "$testSubscriptionId"
             |   }]
             | }]
