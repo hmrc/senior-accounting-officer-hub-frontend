@@ -18,6 +18,7 @@ package controllers.actions
 
 import com.google.inject.Inject
 import config.AppConfig
+import controllers.actions.AuthenticatedIdentifierAction.{DsaoServiceName, EtmpSubscriptionIdIdentifier}
 import controllers.routes
 import play.api.mvc.*
 import play.api.mvc.Results.*
@@ -47,11 +48,12 @@ class AuthenticatedIdentifierAction @Inject() (
 
     authorised().retrieve(Retrievals.internalId and Retrievals.allEnrolments) {
       case Some(internalId) ~ allEnrolments =>
-        allEnrolments.enrolments
-          .collectFirst { case Enrolment("HMRC-DSAO-ORG", EnrolmentIdentifier(_, subscriptionId) :: Nil, _, _) =>
-            block(IdentifierRequest(request, internalId, subscriptionId))
-          }
-          .fold(Future.successful(Redirect(routes.NoEnrollmentController.onPageLoad())))(identity)
+        {
+          for {
+            enrolment  <- allEnrolments.enrolments.find(_.key == DsaoServiceName)
+            identifier <- enrolment.getIdentifier(EtmpSubscriptionIdIdentifier)
+          } yield block(IdentifierRequest(request, internalId, identifier.value))
+        }.getOrElse(Future.successful(Redirect(routes.NoEnrollmentController.onPageLoad())))
       case _ => throw new UnauthorizedException("retrieval failed")
     } recover {
       case _: NoActiveSession =>
@@ -60,4 +62,9 @@ class AuthenticatedIdentifierAction @Inject() (
         Redirect(routes.UnauthorisedController.onPageLoad())
     }
   }
+}
+
+object AuthenticatedIdentifierAction {
+  private val DsaoServiceName              = "HMRC-DSAO-ORG"
+  private val EtmpSubscriptionIdIdentifier = "EtmpSubscriptionId"
 }
