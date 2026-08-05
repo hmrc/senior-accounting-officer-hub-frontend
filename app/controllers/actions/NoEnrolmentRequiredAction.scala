@@ -18,40 +18,35 @@ package controllers.actions
 
 import com.google.inject.Inject
 import config.AppConfig
-import controllers.actions.AuthenticatedIdentifierAction.{DsaoServiceName, EtmpSubscriptionIdIdentifier}
 import controllers.routes
 import play.api.mvc.*
 import play.api.mvc.Results.*
-import requests.EnroledRequest
+import requests.IdentifierRequest
 import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.auth.core.retrieve.v2.Retrievals
-import uk.gov.hmrc.auth.core.retrieve.~
 import uk.gov.hmrc.http.{HeaderCarrier, UnauthorizedException}
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait IdentifierAction extends ActionBuilder[EnroledRequest, AnyContent] with ActionFunction[Request, EnroledRequest]
+trait NoEnrolmentRequiredAction
+    extends ActionBuilder[IdentifierRequest, AnyContent]
+    with ActionFunction[Request, IdentifierRequest]
 
-class AuthenticatedIdentifierAction @Inject() (
+class NoEnrolmentRequiredActionImpl @Inject() (
     override val authConnector: AuthConnector,
     config: AppConfig,
     val parser: BodyParsers.Default
 )(implicit val executionContext: ExecutionContext)
-    extends IdentifierAction
+    extends NoEnrolmentRequiredAction
     with AuthorisedFunctions {
 
-  override def invokeBlock[A](request: Request[A], block: EnroledRequest[A] => Future[Result]): Future[Result] = {
+  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] = {
     given HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
-    authorised().retrieve(Retrievals.internalId and Retrievals.allEnrolments) {
-      case Some(internalId) ~ allEnrolments =>
-        {
-          for {
-            enrolment  <- allEnrolments.enrolments.find(_.key == DsaoServiceName)
-            identifier <- enrolment.getIdentifier(EtmpSubscriptionIdIdentifier)
-          } yield block(EnroledRequest(request, internalId, identifier.value))
-        }.getOrElse(Future.successful(Redirect(routes.NoEnrollmentController.onPageLoad())))
+    authorised().retrieve(Retrievals.internalId) {
+      case Some(internalId) =>
+        block(IdentifierRequest(request, internalId))
       case _ => throw new UnauthorizedException("retrieval failed")
     } recover {
       case _: NoActiveSession =>
@@ -60,9 +55,4 @@ class AuthenticatedIdentifierAction @Inject() (
         Redirect(routes.UnauthorisedController.onPageLoad())
     }
   }
-}
-
-object AuthenticatedIdentifierAction {
-  private val DsaoServiceName              = "HMRC-DSAO-ORG"
-  private val EtmpSubscriptionIdIdentifier = "EtmpSubscriptionId"
 }

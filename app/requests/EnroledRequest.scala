@@ -14,19 +14,9 @@
  * limitations under the License.
  */
 
-package controllers.actions
+package requests
 
-import models.UserAnswers
-import requests.{DataRequest, EnroledRequest}
+import play.api.mvc.{Request, WrappedRequest}
 
-import scala.concurrent.{ExecutionContext, Future}
-
-class FakeEnsureSubscriptionAction(
-    dataToReturn: UserAnswers
-) extends EnsureSubscriptionAction {
-  override protected def transform[A](request: EnroledRequest[A]): Future[DataRequest[A]] =
-    Future(DataRequest(request.request, request.userId, request.saoSubscriptionId, dataToReturn))
-
-  override protected implicit val executionContext: ExecutionContext =
-    scala.concurrent.ExecutionContext.Implicits.global
-}
+final case class EnroledRequest[A](request: Request[A], userId: String, saoSubscriptionId: String)
+    extends WrappedRequest[A](request)

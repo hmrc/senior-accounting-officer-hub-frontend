@@ -16,7 +16,7 @@
 
 package base
 
-import controllers.actions.{FakeIdentifierAction, IdentifierAction}
+import controllers.actions.*
 import org.scalatest.OptionValues
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.must.Matchers
@@ -30,7 +30,10 @@ trait SpecBase extends AnyWordSpec with Matchers with GuiceOneAppPerSuite with O
 
   override def fakeApplication(): Application =
     new GuiceApplicationBuilder()
-      .overrides(bind[IdentifierAction].to[FakeIdentifierAction])
+      .overrides(
+        bind[IdentifierAction].to[FakeIdentifierAction],
+        bind[NoEnrolmentRequiredAction].to[FakeNoEnrolmentRequiredAction]
+      )
       .build()
 
 }

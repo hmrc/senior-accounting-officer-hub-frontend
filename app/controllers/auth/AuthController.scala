@@ -17,7 +17,7 @@
 package controllers.auth
 
 import config.AppConfig
-import controllers.actions.IdentifierAction
+import controllers.actions.NoEnrolmentRequiredAction
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -27,7 +27,7 @@ import javax.inject.Inject
 class AuthController @Inject() (
     val controllerComponents: MessagesControllerComponents,
     config: AppConfig,
-    identify: IdentifierAction
+    identify: NoEnrolmentRequiredAction
 ) extends FrontendBaseController
     with I18nSupport {
 

@@ -18,7 +18,7 @@ package controllers.actions
 
 import base.AuthenticatedControllerTestConstants.*
 import play.api.mvc.*
-import requests.IdentifierRequest
+import requests.EnroledRequest
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -26,8 +26,8 @@ import javax.inject.Inject
 
 class FakeIdentifierAction @Inject() (bodyParsers: PlayBodyParsers) extends IdentifierAction {
 
-  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
-    block(IdentifierRequest(request, userAnswersId, testSaoSubscriptionId))
+  override def invokeBlock[A](request: Request[A], block: EnroledRequest[A] => Future[Result]): Future[Result] =
+    block(EnroledRequest(request, userAnswersId, testSaoSubscriptionId))
 
   override def parser: BodyParser[AnyContent] =
     bodyParsers.default
