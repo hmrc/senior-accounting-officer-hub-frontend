@@ -23,7 +23,7 @@ import play.api.http.Status.*
 import play.api.libs.json.Json
 import play.api.mvc.ActionTransformer
 import repositories.SessionRepository
-import requests.{DataRequest, IdentifierRequest}
+import requests.{DataRequest, EnroledRequest}
 import uk.gov.hmrc.http.{HeaderCarrier, HttpResponse, InternalServerException}
 import uk.gov.hmrc.play.http.HeaderCarrierConverter
 
@@ -34,7 +34,7 @@ import scala.util.control.NonFatal
 import java.time.Clock
 import javax.inject.Inject
 
-trait EnsureSubscriptionAction extends ActionTransformer[IdentifierRequest, DataRequest]
+trait EnsureSubscriptionAction extends ActionTransformer[EnroledRequest, DataRequest]
 
 class EnsureSubscriptionActionImpl @Inject() (
     val sessionRepository: SessionRepository,
@@ -44,7 +44,7 @@ class EnsureSubscriptionActionImpl @Inject() (
     extends EnsureSubscriptionAction
     with Logging {
 
-  override protected def transform[A](request: IdentifierRequest[A]): Future[DataRequest[A]] = {
+  override protected def transform[A](request: EnroledRequest[A]): Future[DataRequest[A]] = {
     given HeaderCarrier = HeaderCarrierConverter.fromRequestAndSession(request, request.session)
 
     for {
@@ -56,7 +56,7 @@ class EnsureSubscriptionActionImpl @Inject() (
     } yield DataRequest(request.request, request.userId, request.saoSubscriptionId, userAnswers)
   }
 
-  private def getAndSetSubscription[A](request: IdentifierRequest[A])(using HeaderCarrier): Future[UserAnswers] =
+  private def getAndSetSubscription[A](request: EnroledRequest[A])(using HeaderCarrier): Future[UserAnswers] =
     for {
       saoSubscription <- getSubscription()
       userAnswers = UserAnswers(

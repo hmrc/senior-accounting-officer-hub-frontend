@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 HM Revenue & Customs
+ * Copyright 2026 HM Revenue & Customs
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,17 +16,22 @@
 
 package controllers.actions
 
-import models.UserAnswers
-import requests.{DataRequest, EnroledRequest}
+import base.AuthenticatedControllerTestConstants.*
+import play.api.mvc.*
+import requests.IdentifierRequest
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class FakeEnsureSubscriptionAction(
-    dataToReturn: UserAnswers
-) extends EnsureSubscriptionAction {
-  override protected def transform[A](request: EnroledRequest[A]): Future[DataRequest[A]] =
-    Future(DataRequest(request.request, request.userId, request.saoSubscriptionId, dataToReturn))
+import javax.inject.Inject
 
-  override protected implicit val executionContext: ExecutionContext =
+class FakeNoEnrolmentRequiredAction @Inject() (bodyParsers: PlayBodyParsers) extends NoEnrolmentRequiredAction {
+
+  override def invokeBlock[A](request: Request[A], block: IdentifierRequest[A] => Future[Result]): Future[Result] =
+    block(IdentifierRequest(request, userAnswersId))
+
+  override def parser: BodyParser[AnyContent] =
+    bodyParsers.default
+
+  override protected def executionContext: ExecutionContext =
     scala.concurrent.ExecutionContext.Implicits.global
 }

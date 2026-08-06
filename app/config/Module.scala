@@ -26,6 +26,7 @@ class Module extends AbstractModule {
   override def configure(): Unit = {
 
     bind(classOf[IdentifierAction]).to(classOf[AuthenticatedIdentifierAction]).asEagerSingleton()
+    bind(classOf[NoEnrolmentRequiredAction]).to(classOf[NoEnrolmentRequiredActionImpl]).asEagerSingleton()
     bind(classOf[EnsureSubscriptionAction]).to(classOf[EnsureSubscriptionActionImpl]).asEagerSingleton()
 
     bind(classOf[AppConfig]).asEagerSingleton()
