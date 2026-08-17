@@ -68,7 +68,8 @@ class BackendProxyController @Inject() (
           .setHeader(headers*)
     }
 
-    val targetUrl = s"${appConfig.backendBaseUrl}/${URLDecoder.decode(path, StandardCharsets.UTF_8)}"
+    val queryString = Option(request.rawQueryString).filter(_.nonEmpty).fold("")(qs => s"?$qs")
+    val targetUrl   = s"${appConfig.backendBaseUrl}/${URLDecoder.decode(path, StandardCharsets.UTF_8)}$queryString"
     http(url"$targetUrl")
       .execute[HttpResponse]
       .map(response =>
