@@ -19,3 +19,6 @@ POST       /senior-accounting-officer/test-only/protected-proxy/*path      contr
 PUT        /senior-accounting-officer/test-only/protected-proxy/*path      controllers.testOnly.BackendProxyController.proxy(path)
 
 GET        /senior-accounting-officer/test-only/authorization              controllers.testOnly.SessionCookieExtractorController.getAuthorization
+
+GET        /senior-accounting-officer/test-only/send-email                 controllers.testOnly.SendEmailController.get()
+POST       /senior-accounting-officer/test-only/send-email                 controllers.testOnly.SendEmailController.send()
