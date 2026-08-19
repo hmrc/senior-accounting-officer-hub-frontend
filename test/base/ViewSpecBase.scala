@@ -54,7 +54,7 @@ class ViewSpecBase[T <: BaseScalaTemplate[HtmlFormat.Appendable, Format[HtmlForm
     def createTestWithPageTitle(pageTitle: String, hasError: Boolean)(using pos: Position): Unit =
       "must generate a view with the correct title" in {
         val errorPrefix = if hasError then "Error: " else ""
-        doc.title mustBe s"$errorPrefix$pageTitle - $expectedServiceName - site.govuk"
+        doc.title mustBe s"$errorPrefix$pageTitle - $expectedServiceName - GOV.UK"
       }
 
     def createTestWithPageHeading(pageHeading: String)(using

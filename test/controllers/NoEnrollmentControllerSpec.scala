@@ -22,14 +22,14 @@ import play.api.http.Status
 import play.api.i18n.{Messages, MessagesApi}
 import play.api.test.FakeRequest
 import play.api.test.Helpers.*
-import views.html.UnauthorisedView
+import views.html.NoEnrollmentView
 
 class NoEnrollmentControllerSpec extends SpecBase {
 
   private val fakeRequest = FakeRequest("GET", "/")
 
   private val controller         = app.injector.instanceOf[NoEnrollmentController]
-  private val view               = app.injector.instanceOf[UnauthorisedView]
+  private val view               = app.injector.instanceOf[NoEnrollmentView]
   private def messages: Messages = app.injector.instanceOf[MessagesApi].preferred(FakeRequest())
 
   "NotEnrolled Controller" must {
