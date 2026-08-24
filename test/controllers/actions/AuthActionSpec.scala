@@ -25,7 +25,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers.*
 import uk.gov.hmrc.auth.core.*
 import uk.gov.hmrc.auth.core.authorise.Predicate
-import uk.gov.hmrc.auth.core.retrieve.Retrieval
+import uk.gov.hmrc.auth.core.retrieve.{Retrieval, ~}
 import uk.gov.hmrc.http.HeaderCarrier
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -41,6 +41,37 @@ class AuthActionSpec extends SpecBase {
   val appConfig: AppConfig = app.injector.instanceOf[AppConfig]
 
   "Auth Action" when {
+
+    "the user has no DSAO enrolment" must {
+      "redirect the user to the no enrollment kick-out page" in {
+        val authAction = new AuthenticatedIdentifierAction(
+          new FakeSuccessfulAuthConnector(new ~(Some("internalId"), Enrolments(Set.empty))),
+          appConfig,
+          bodyParsers
+        )
+        val controller = new Harness(authAction)
+        val result     = controller.onPageLoad()(FakeRequest())
+
+        status(result) mustBe SEE_OTHER
+        redirectLocation(result) mustBe Some(routes.NoEnrollmentController.onPageLoad().url)
+      }
+    }
+
+    "the user has a DSAO enrolment" must {
+      "let the user through to the requested page" in {
+        val enrolment = Enrolment("HMRC-DSAO-ORG").withIdentifier("EtmpSubscriptionId", "testSubscriptionId")
+
+        val authAction = new AuthenticatedIdentifierAction(
+          new FakeSuccessfulAuthConnector(new ~(Some("internalId"), Enrolments(Set(enrolment)))),
+          appConfig,
+          bodyParsers
+        )
+        val controller = new Harness(authAction)
+        val result     = controller.onPageLoad()(FakeRequest())
+
+        status(result) mustBe OK
+      }
+    }
 
     "the user hasn't logged in" must {
       "redirect the user to log in " in {
@@ -153,6 +184,16 @@ class AuthActionSpec extends SpecBase {
 
   }
 
+}
+
+class FakeSuccessfulAuthConnector[T](retrievalToReturn: T) extends AuthConnector {
+  val serviceUrl: String = ""
+
+  override def authorise[A](predicate: Predicate, retrieval: Retrieval[A])(using
+      hc: HeaderCarrier,
+      ec: ExecutionContext
+  ): Future[A] =
+    Future.successful(retrievalToReturn.asInstanceOf[A])
 }
 
 class FakeFailingAuthConnector(exceptionToReturn: Throwable) extends AuthConnector {

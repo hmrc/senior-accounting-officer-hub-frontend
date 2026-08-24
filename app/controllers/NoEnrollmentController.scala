@@ -19,13 +19,13 @@ package controllers
 import play.api.i18n.I18nSupport
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.UnauthorisedView
+import views.html.NoEnrollmentView
 
 import javax.inject.Inject
 
 class NoEnrollmentController @Inject() (
     val controllerComponents: MessagesControllerComponents,
-    view: UnauthorisedView
+    view: NoEnrollmentView
 ) extends FrontendBaseController
     with I18nSupport {
 

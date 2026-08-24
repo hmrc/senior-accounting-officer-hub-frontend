@@ -42,6 +42,8 @@ class AppConfig @Inject() (servicesConfig: ServicesConfig, config: Configuration
   def loginContinueUrl: String = config.get[String]("urls.loginContinue")
   def signOutUrl: String       = config.get[String]("urls.signOut")
 
+  def registerForServiceUrl: String = config.get[String]("urls.registerForService")
+
   private def exitSurveyBaseUrl: String = config.get[String]("feedback-frontend.host")
   def exitSurveyUrl: String             = s"$exitSurveyBaseUrl/feedback/$contactFormServiceIdentifier"
 
