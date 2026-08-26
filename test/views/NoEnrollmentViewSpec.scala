@@ -35,7 +35,7 @@ class NoEnrollmentViewSpec extends ViewSpecBase[NoEnrollmentView] {
       pageTitle = pageTitle,
       pageHeading = pageHeading,
       showIsThisPageNotWorkingProperlyLink = true,
-      hasError = true
+      hasError = false
     )
 
     doc.createTestsWithParagraphs(Seq(paragraph1))
