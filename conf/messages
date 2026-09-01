@@ -7,7 +7,7 @@ noEnrollment.heading = You do not have access to this service
 noEnrollment.paragraph1 = You need to {0} to access this page.
 noEnrollment.register.linkText = register to submit a Senior Accounting Officer notification and certificate service
 
-hub.dashboard.title = Homepage
+hub.dashboard.title = Senior Accounting Officer notification and certificate
 hub.dashboard.heading = Senior Accounting Officer notification and certificate
 hub.dashboard.subheading1 = Get a submission template
 hub.dashboard.subheading2 = Make a submission

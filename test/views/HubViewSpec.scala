@@ -109,7 +109,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
 }
 
 object HubViewSpec {
-  val pageTitle               = "Homepage"
+  val pageTitle               = "Senior Accounting Officer notification and certificate"
   val pageHeading             = "Senior Accounting Officer notification and certificate"
   val pageCaption             = "Fake Company Ltd"
   val linkLocator1            = ".account-home-card:nth-of-type(2)"
