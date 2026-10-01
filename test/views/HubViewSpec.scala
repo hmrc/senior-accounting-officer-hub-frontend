@@ -121,12 +121,12 @@ object HubViewSpec {
   val paragraphs: Seq[String] = Seq(
     "Reference ID: fakexxx1234",
     "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
-    "You can start a new submission. Submit a notification, a certificate, or both at the same time."
+    "You can start a new submission. Submit a notification or a certificate."
   )
 
   val cardParagraphs: Seq[String] = Seq(
     "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
-    "You can start a new submission. Submit a notification, a certificate, or both at the same time."
+    "You can start a new submission. Submit a notification or a certificate."
   )
 
   val cardSubheadings: Seq[String] = Seq(
