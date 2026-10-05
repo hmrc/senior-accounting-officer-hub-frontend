@@ -52,10 +52,8 @@ hub.dashboard.certificationDetails.section.row.link.notPresentYet = Not present 
 hub.dashboard.link.manageContactDetails.text = Manage contact details
 hub.dashboard.link.manageCompanyDetails.text = Manage company details
 
-
-
-
-
-
-
-
+pageNotFound.title = Error: Page not found
+pageNotFound.heading = Page not found
+pageNotFound.paragraph1 = If you typed the web address, check it is correct.
+pageNotFound.paragraph2 = If you pasted the web address, check you copied the entire address.
+pageNotFound.paragraph3WithLink = If the web address is correct or you selected a link or button, contact your Customer Compliance Manager (CCM) if you have one, or email <a href="mailto:wmbc.saomailbox@hmrc.gov.uk" class="govuk-link">wmbc.saomailbox@hmrc.gov.uk</a> for support.

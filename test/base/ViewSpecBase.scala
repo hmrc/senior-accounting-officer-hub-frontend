@@ -82,6 +82,28 @@ class ViewSpecBase[T <: BaseScalaTemplate[HtmlFormat.Appendable, Format[HtmlForm
 
         java.net.URI(helpLink.get(0).attributes.get("href")).getQuery must include(s"service=$expectedServiceId")
       }
+
+    def createTestsWithOrWithoutError(hasError: Boolean): Unit =
+      if hasError then
+        "must show an error" in {
+          val elements = doc.getElementsByClass("govuk-error-summary")
+          withClue("error message must be shown\n") {
+            elements.size mustBe 1
+          }
+
+          val errorSummary      = elements.first
+          val errorSummaryTitle = errorSummary.getElementsByClass("govuk-error-summary__title")
+
+          errorSummaryTitle.text mustBe "There is a problem"
+        }
+      else
+        "must not show an error" in {
+          val elements = doc.getElementsByClass("govuk-error-summary govuk-form-group--error")
+          withClue("error message must not be shown\n") {
+            elements.isEmpty() mustBe true
+          }
+        }
+
   }
   extension (target: => Document | Element) {
     private def resolve: Element = target match {
