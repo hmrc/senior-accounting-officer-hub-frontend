@@ -80,7 +80,7 @@ class HubViewSpec extends ViewSpecBase[HubView] {
 
     def createTestWithParagraphsWithinAccountHomeCards(paragraphs: Seq[String]): Unit = {
       val homeCardParagraphs = doc.getMainContent.select(".account-home-card p")
-      
+
       "must have 3 paragraphs within account home cards" in {
         homeCardParagraphs.size() mustBe paragraphs.length
       }
