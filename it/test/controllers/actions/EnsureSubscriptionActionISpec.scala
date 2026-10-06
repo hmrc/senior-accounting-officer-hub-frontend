@@ -29,7 +29,7 @@ import play.api.test.FakeRequest
 import repositories.SessionRepository
 import support.MockAuthHelper.{authSession, testId, testSubscriptionId}
 import support.{ISpecBase, MockAuthHelper, MockGetSubscriptionHelper, SessionCookieBaker}
-import views.html.ErrorTemplate
+import views.html.{ErrorTemplate, UnexpectedErrorView}
 
 import java.time.temporal.ChronoUnit
 import java.time.{Clock, Instant, ZoneId}
@@ -118,7 +118,7 @@ class EnsureSubscriptionActionISpec extends ISpecBase with BeforeAndAfterEach {
           .futureValue
 
         result.status mustBe 500
-        result.body[String] mustBe default500ErrorTemplate
+        result.body[String] mustBe unexpectedErrorPage
 
         MockGetSubscriptionHelper.verifyGetSubscriptionWasCalled()
         repository.get(testId).futureValue mustBe None
@@ -138,7 +138,7 @@ class EnsureSubscriptionActionISpec extends ISpecBase with BeforeAndAfterEach {
           .futureValue
 
         result.status mustBe 500
-        result.body[String] mustBe default500ErrorTemplate
+        result.body[String] mustBe unexpectedErrorPage
 
         MockGetSubscriptionHelper.verifyGetSubscriptionWasCalled()
         repository.get(testId).futureValue mustBe None
@@ -158,7 +158,7 @@ class EnsureSubscriptionActionISpec extends ISpecBase with BeforeAndAfterEach {
           .futureValue
 
         result.status mustBe 500
-        result.body[String] mustBe default500ErrorTemplate
+        result.body[String] mustBe unexpectedErrorPage
 
         MockGetSubscriptionHelper.verifyGetSubscriptionWasCalled()
         repository.get(testId).futureValue mustBe None
@@ -178,7 +178,7 @@ class EnsureSubscriptionActionISpec extends ISpecBase with BeforeAndAfterEach {
           .futureValue
 
         result.status mustBe 500
-        result.body[String] mustBe default500ErrorTemplate
+        result.body[String] mustBe unexpectedErrorPage
 
         MockGetSubscriptionHelper.verifyGetSubscriptionWasCalled()
         repository.get(testId).futureValue mustBe None
@@ -198,7 +198,7 @@ class EnsureSubscriptionActionISpec extends ISpecBase with BeforeAndAfterEach {
           .futureValue
 
         result.status mustBe 500
-        result.body[String] mustBe default500ErrorTemplate
+        result.body[String] mustBe unexpectedErrorPage
 
         MockGetSubscriptionHelper.verifyGetSubscriptionWasCalled()
         repository.get(testId).futureValue mustBe None
@@ -208,15 +208,11 @@ class EnsureSubscriptionActionISpec extends ISpecBase with BeforeAndAfterEach {
 
   }
 
-  def default500ErrorTemplate: String = {
+  def unexpectedErrorPage: String = {
     given Messages      = app.injector.instanceOf[MessagesApi].preferred(Seq.empty)
     given RequestHeader = FakeRequest("GET", testPath)
-    val template        = app.injector.instanceOf[ErrorTemplate]
-    template(
-      Messages("global.error.InternalServerError500.title"),
-      Messages("global.error.InternalServerError500.heading"),
-      Messages("global.error.InternalServerError500.message")
-    ).toString
+    val unexpectedErrorView        = app.injector.instanceOf[UnexpectedErrorView]
+    unexpectedErrorView().toString
   }
 }
 
