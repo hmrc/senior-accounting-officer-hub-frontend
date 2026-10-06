@@ -44,4 +44,11 @@ class ErrorHandlerSpec extends SpecBase {
       html.contentType mustBe "text/html"
     }
   }
+  "internalServerErrorTemplate must" must {
+    "render HTML" in {
+      val html = handler.internalServerErrorTemplate(fakeRequest).futureValue
+      html.contentType mustBe "text/html"
+    }
+  }
+
 }
