@@ -25,7 +25,7 @@ import views.html.testOnly.FeatureToggleView
 
 import javax.inject.Inject
 
-class FeatureToggleController @Inject()(
+class FeatureToggleController @Inject() (
     override val messagesApi: MessagesApi,
     featureToggleView: FeatureToggleView,
     val controllerComponents: MessagesControllerComponents
