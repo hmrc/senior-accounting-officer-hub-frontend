@@ -22,3 +22,6 @@ GET        /senior-accounting-officer/test-only/authorization              contr
 
 GET        /senior-accounting-officer/test-only/send-email                 controllers.testOnly.SendEmailController.get()
 POST       /senior-accounting-officer/test-only/send-email                 controllers.testOnly.SendEmailController.send()
+
+GET       /senior-accounting-officer/test-only/feature-toggle              controllers.testOnly.FeatureToggleController.get()
+POST      /senior-accounting-officer/test-only/feature-toggle              controllers.testOnly.FeatureToggleController.update()
