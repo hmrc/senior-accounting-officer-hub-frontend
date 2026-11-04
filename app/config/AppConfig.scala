@@ -16,6 +16,7 @@
 
 package config
 
+import models.testOnly.FeatureToggle.WelshTranslation
 import play.api.Configuration
 import play.api.mvc.RequestHeader
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
@@ -23,12 +24,12 @@ import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
 import javax.inject.{Inject, Singleton}
 
 @Singleton
-class AppConfig @Inject() (servicesConfig: ServicesConfig, config: Configuration) {
+class AppConfig @Inject() (servicesConfig: ServicesConfig, val config: Configuration) extends FeatureConfigSupport {
+  given Configuration = config
 
   val cacheTtl: Long = config.get[Int]("mongodb.timeToLiveInSeconds")
 
-  def welshLanguageSupportEnabled: Boolean =
-    config.getOptional[Boolean]("features.welsh-language-support").getOrElse(false)
+  def welshLanguageSupportEnabled: Boolean = isEnabled(WelshTranslation)
 
   def host: String = config.get[String]("host")
 
