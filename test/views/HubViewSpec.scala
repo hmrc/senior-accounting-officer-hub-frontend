@@ -109,15 +109,15 @@ class HubViewSpec extends ViewSpecBase[HubView] {
 }
 
 object HubViewSpec {
-  val pageTitle               = "Senior Accounting Officer notification and certificate"
-  val pageHeading             = "Senior Accounting Officer notification and certificate"
-  val pageCaption             = "Fake Company Ltd"
-  val linkLocator1            = ".account-home-card:nth-of-type(2)"
-  val linkLocator2            = ".account-home-card:nth-of-type(3)"
-  val linkText                = "Get a submission template"
-  val linkText2               = "Make a submission"
-  val linkUrl                 = "test-host-config/senior-accounting-officer/submission/template-guidance"
-  val linkUrl2                = "test-host-config/senior-accounting-officer/submission/submission-type"
+  val pageTitle    = "Senior Accounting Officer notification and certificate"
+  val pageHeading  = "Senior Accounting Officer notification and certificate"
+  val pageCaption  = "Fake Company Ltd"
+  val linkLocator1 = ".account-home-card:nth-of-type(2)"
+  val linkLocator2 = ".account-home-card:nth-of-type(3)"
+  val linkText     = "Get a submission template"
+  val linkText2    = "Make a submission"
+  val linkUrl      = "test-host-config/senior-accounting-officer/submission/template/guidance/make-a-submission"
+  val linkUrl2     = "test-host-config/senior-accounting-officer/submission"
   val paragraphs: Seq[String] = Seq(
     "Reference ID: fakexxx1234",
     "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
