@@ -51,7 +51,7 @@ class AppConfig @Inject() (servicesConfig: ServicesConfig, val config: Configura
   def submissionFrontendHostAndContext: String =
     s"${getValue("senior-accounting-officer-submission-frontend.host")}/senior-accounting-officer/submission"
 
-  def templateGuidance: String = s"$submissionFrontendHostAndContext/template-guidance"
+  def templateGuidance: String = s"$submissionFrontendHostAndContext/template/guidance/make-a-submission"
 
   def backendBaseUrl: String = servicesConfig.baseUrl("senior-accounting-officer")
 
