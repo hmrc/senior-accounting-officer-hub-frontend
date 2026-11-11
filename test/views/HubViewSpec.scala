@@ -117,7 +117,7 @@ object HubViewSpec {
   val linkText                = "Get a submission template"
   val linkText2               = "Make a submission"
   val linkUrl                 = "test-host-config/senior-accounting-officer/submission/template-guidance"
-  val linkUrl2                = "test-host-config/senior-accounting-officer/submission/submission-type"
+  val linkUrl2                = "test-host-config/senior-accounting-officer/submission"
   val paragraphs: Seq[String] = Seq(
     "Reference ID: fakexxx1234",
     "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
