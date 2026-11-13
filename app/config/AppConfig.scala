@@ -16,7 +16,7 @@
 
 package config
 
-import models.testOnly.FeatureToggle.WelshTranslation
+import models.testOnly.FeatureToggle.{CombinedJourney, WelshTranslation}
 import play.api.Configuration
 import play.api.mvc.RequestHeader
 import uk.gov.hmrc.play.bootstrap.config.ServicesConfig
@@ -30,6 +30,7 @@ class AppConfig @Inject() (servicesConfig: ServicesConfig, val config: Configura
   val cacheTtl: Long = config.get[Int]("mongodb.timeToLiveInSeconds")
 
   def welshLanguageSupportEnabled: Boolean = isEnabled(WelshTranslation)
+  def combinedJourneyEnabled: Boolean      = isEnabled(CombinedJourney)
 
   def host: String = config.get[String]("host")
 

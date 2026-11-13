@@ -33,40 +33,45 @@ class HubViewSpec extends ViewSpecBase[HubView] {
     new GuiceApplicationBuilder()
       .configure("senior-accounting-officer-submission-frontend.host" -> testSubmissionFrontendHost)
       .build()
+  Seq(true, false).foreach { combinedJourneyEnabled =>
 
-  val doc: Document =
-    Jsoup.parse(SUT("Fake Company Ltd", "fakexxx1234").toString)
-  "HubView" must {
+    val doc: Document = Jsoup.parse(SUT("Fake Company Ltd", "fakexxx1234", combinedJourneyEnabled = combinedJourneyEnabled).toString)
 
-    doc.createTestsWithStandardPageElements(
-      pageTitle = pageTitle,
-      pageHeading = pageHeading,
-      showIsThisPageNotWorkingProperlyLink = true,
-      hasError = false
-    )
+    s"HubView - combined Journey = $combinedJourneyEnabled" must {
 
-    doc.createTestsWithLargeCaption(
-      pageCaption
-    )
+      val paragraphs = if(combinedJourneyEnabled) combinedParagraphs else nonCombinedParagraphs
+      val cardParagraphs = if(combinedJourneyEnabled) cardParagraphsCombined else cardParagraphsNonCombined
 
-    doc
-      .select(linkLocator1)
-      .get(0)
-      .createTestWithLink(linkText, linkUrl)
+      doc.createTestsWithStandardPageElements(
+        pageTitle = pageTitle,
+        pageHeading = pageHeading,
+        showIsThisPageNotWorkingProperlyLink = true,
+        hasError = false
+      )
 
-    doc
-      .select(linkLocator2)
-      .get(0)
-      .createTestWithLink(linkText2, linkUrl2)
+      doc.createTestsWithLargeCaption(
+        pageCaption
+      )
 
-    doc.createTestsWithParagraphs(paragraphs)
+      doc
+        .select(linkLocator1)
+        .get(0)
+        .createTestWithLink(linkText, linkUrl)
 
-    doc.createTestWithAccountHomeCards()
+      doc
+        .select(linkLocator2)
+        .get(0)
+        .createTestWithLink(linkText2, linkUrl2)
 
-    doc.createTestWithParagraphsWithinAccountHomeCards(cardParagraphs)
+      doc.createTestsWithParagraphs(paragraphs)
 
-    doc.createTestWithSubHeadingsWithinAccountHomeCards(cardSubheadings)
+      doc.createTestWithAccountHomeCards()
 
+      doc.createTestWithParagraphsWithinAccountHomeCards(cardParagraphs)
+
+      doc.createTestWithSubHeadingsWithinAccountHomeCards(cardSubheadings)
+
+    }
   }
 
   extension (doc: Document) {
@@ -118,16 +123,20 @@ object HubViewSpec {
   val linkText2    = "Make a submission"
   val linkUrl      = "test-host-config/senior-accounting-officer/submission/template/guidance/make-a-submission"
   val linkUrl2     = "test-host-config/senior-accounting-officer/submission"
-  val paragraphs: Seq[String] = Seq(
+
+  private val nonCombinedText = Seq("You can start a new submission. Submit a notification or a certificate.")
+  private val combinedText = Seq("You can start a new submission. Submit a notification, a certificate, or both at the same time.")
+  private val baseParagraph = Seq(
     "Reference ID: fakexxx1234",
-    "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
-    "You can start a new submission. Submit a notification or a certificate."
+    "Download a template to prepare your submission and read guidance on how to complete and submit the template."
   )
 
-  val cardParagraphs: Seq[String] = Seq(
-    "Download a template to prepare your submission and read guidance on how to complete and submit the template.",
-    "You can start a new submission. Submit a notification or a certificate."
-  )
+  val nonCombinedParagraphs: Seq[String] = baseParagraph ++ nonCombinedText
+  val combinedParagraphs: Seq[String] = baseParagraph ++ combinedText
+
+  private val cardParagraphBase = Seq("Download a template to prepare your submission and read guidance on how to complete and submit the template.")
+  val cardParagraphsCombined: Seq[String] = cardParagraphBase ++ combinedText
+  val cardParagraphsNonCombined: Seq[String] = cardParagraphBase ++ nonCombinedText
 
   val cardSubheadings: Seq[String] = Seq(
     "Get a submission template",

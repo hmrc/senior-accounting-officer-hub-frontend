@@ -16,6 +16,7 @@
 
 package controllers
 
+import config.AppConfig
 import controllers.actions.{EnsureSubscriptionAction, IdentifierAction}
 import models.CompanyDetails
 import play.api.i18n.I18nSupport
@@ -30,7 +31,8 @@ class IndexController @Inject() (
     identify: IdentifierAction,
     ensureSubscription: EnsureSubscriptionAction,
     mcc: MessagesControllerComponents,
-    hubView: HubView
+    hubView: HubView,
+    appConfig: AppConfig
 ) extends FrontendController(mcc)
     with I18nSupport {
 
@@ -40,7 +42,7 @@ class IndexController @Inject() (
       referenceId = request.saoSubscriptionId
     )
 
-    Ok(hubView(companyDetails.companyName, companyDetails.referenceId))
+    Ok(hubView(companyDetails.companyName, companyDetails.referenceId, appConfig.combinedJourneyEnabled))
   }
 
 }
