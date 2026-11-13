@@ -34,13 +34,13 @@ class HubViewSpec extends ViewSpecBase[HubView] {
       .configure("senior-accounting-officer-submission-frontend.host" -> testSubmissionFrontendHost)
       .build()
   Seq(true, false).foreach { combinedJourneyEnabled =>
-
-    val doc: Document = Jsoup.parse(SUT("Fake Company Ltd", "fakexxx1234", combinedJourneyEnabled = combinedJourneyEnabled).toString)
+    val doc: Document =
+      Jsoup.parse(SUT("Fake Company Ltd", "fakexxx1234", combinedJourneyEnabled = combinedJourneyEnabled).toString)
 
     s"HubView - combined Journey = $combinedJourneyEnabled" must {
 
-      val paragraphs = if(combinedJourneyEnabled) combinedParagraphs else nonCombinedParagraphs
-      val cardParagraphs = if(combinedJourneyEnabled) cardParagraphsCombined else cardParagraphsNonCombined
+      val paragraphs     = if combinedJourneyEnabled then combinedParagraphs else nonCombinedParagraphs
+      val cardParagraphs = if combinedJourneyEnabled then cardParagraphsCombined else cardParagraphsNonCombined
 
       doc.createTestsWithStandardPageElements(
         pageTitle = pageTitle,
@@ -125,17 +125,21 @@ object HubViewSpec {
   val linkUrl2     = "test-host-config/senior-accounting-officer/submission"
 
   private val nonCombinedText = Seq("You can start a new submission. Submit a notification or a certificate.")
-  private val combinedText = Seq("You can start a new submission. Submit a notification, a certificate, or both at the same time.")
+  private val combinedText    = Seq(
+    "You can start a new submission. Submit a notification, a certificate, or both at the same time."
+  )
   private val baseParagraph = Seq(
     "Reference ID: fakexxx1234",
     "Download a template to prepare your submission and read guidance on how to complete and submit the template."
   )
 
   val nonCombinedParagraphs: Seq[String] = baseParagraph ++ nonCombinedText
-  val combinedParagraphs: Seq[String] = baseParagraph ++ combinedText
+  val combinedParagraphs: Seq[String]    = baseParagraph ++ combinedText
 
-  private val cardParagraphBase = Seq("Download a template to prepare your submission and read guidance on how to complete and submit the template.")
-  val cardParagraphsCombined: Seq[String] = cardParagraphBase ++ combinedText
+  private val cardParagraphBase = Seq(
+    "Download a template to prepare your submission and read guidance on how to complete and submit the template."
+  )
+  val cardParagraphsCombined: Seq[String]    = cardParagraphBase ++ combinedText
   val cardParagraphsNonCombined: Seq[String] = cardParagraphBase ++ nonCombinedText
 
   val cardSubheadings: Seq[String] = Seq(
