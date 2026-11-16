@@ -26,6 +26,7 @@ enum FeatureToggle(val key: String, val name: String) {
   override def toString: String = s"features.$key"
 
   case WelshTranslation extends FeatureToggle("welsh-translation", "Enable Welsh language toggle")
+  case CombinedJourney  extends FeatureToggle("combined", "Combined Journey")
 }
 
 object FeatureToggle extends FeatureConfigSupport {

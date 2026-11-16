@@ -21,7 +21,7 @@
 @this(appConfig: AppConfig, layout: templates.Layout)
 
 @(
-  companyName: String, saoSubscriptionId: String
+  companyName: String, saoSubscriptionId: String, combinedJourneyEnabled: Boolean
 )(using request: RequestHeader, messages: Messages)
 
 <link href='@controllers.routes.Assets.versioned("stylesheets/application.css")' media="all" rel="stylesheet" type="text/css" />
@@ -43,7 +43,11 @@
     <div class="account-home-card govuk-!-margin-bottom-5">
         <h2 class="govuk-heading-m"><a class="govuk-link" href="@appConfig.submissionFrontendHostAndContext" data-test-id="make-submission-link">@messages("hub.dashboard.subheading2")</a></h2>
         <p class="govuk-body">
-            @messages("hub.dashboard.paragraph3")
+            @if(combinedJourneyEnabled) {
+                @messages("hub.dashboard.paragraph.combined")
+            } else {
+                @messages("hub.dashboard.paragraph3")
+            }
         </p>
     </div>
 

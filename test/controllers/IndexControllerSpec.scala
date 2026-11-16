@@ -55,7 +55,7 @@ class IndexControllerSpec extends AuthenticatedControllerSpecBase {
 
         contentType(result) mustBe Some("text/html")
         charset(result) mustBe Some("utf-8")
-        contentAsString(result) mustBe view(companyName, testSaoSubscriptionId).toString
+        contentAsString(result) mustBe view(companyName, testSaoSubscriptionId, combinedJourneyEnabled = false).toString
       }
     }
   }
