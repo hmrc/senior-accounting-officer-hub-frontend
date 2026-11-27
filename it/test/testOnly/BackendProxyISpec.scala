@@ -472,6 +472,38 @@ class BackendProxyISpec extends ISpecBase {
 
   }
 
+  "proxy PDF response bytes without changing them" in {
+    val targetPath = "/test/pdf"
+    val pdfBytes = Array[Byte](
+      0x25, 0x50, 0x44, 0x46, 0x2d,
+      0x00, 0xff.toByte, 0x41
+    )
+
+    stubFor(
+      get(urlEqualTo(targetPath))
+        .willReturn(
+          aResponse()
+            .withStatus(200)
+            .withHeader(HeaderNames.CONTENT_TYPE, "application/pdf")
+            .withBody(pdfBytes)
+        )
+    )
+
+    val result = wsClient
+      .url(s"$baseUrl/senior-accounting-officer/test-only/protected-proxy$targetPath")
+      .get()
+      .futureValue
+
+    result.status mustBe 200
+    result.header(HeaderNames.CONTENT_TYPE) mustBe Some("application/pdf")
+    result.bodyAsBytes.toArray.toSeq mustBe pdfBytes.toSeq
+
+    verify(
+      1,
+      getRequestedFor(urlEqualTo(targetPath))
+    )
+  }
+
 }
 
 object BackendProxyISpec {
