@@ -34,11 +34,11 @@ package controllers.testOnly
 
 import config.AppConfig
 import org.apache.pekko.util.ByteString
-import play.api.http.MimeTypes
+import play.api.http.{HeaderNames, MimeTypes}
 import play.api.libs.ws.{BodyWritable, InMemoryBody}
 import play.api.mvc.{Action, ControllerComponents}
 import uk.gov.hmrc.http.HttpReads.Implicits.*
-import uk.gov.hmrc.http.client.{HttpClientV2, RequestBuilder}
+import uk.gov.hmrc.http.client.{HttpClientV2, RequestBuilder, readStreamHttpResponse}
 import uk.gov.hmrc.http.{HttpResponse, StringContextOps}
 
 import scala.concurrent.ExecutionContext
@@ -59,38 +59,40 @@ class BackendProxyController @Inject() (
     val headers =
       request.headers.headers.filter((header, _) => headersToKeep.exists(_.toLowerCase == header.toLowerCase))
 
-    val bodyString: Option[String] = request.body.asBytes().map(_.utf8String)
+    val body               = request.body.asBytes().getOrElse(ByteString().empty)
+    val requestContentType =
+      request.headers.get(HeaderNames.CONTENT_TYPE).getOrElse(MimeTypes.BINARY)
 
-    given BodyWritable[String] = BodyWritable(
-      str => InMemoryBody(ByteString(str)),
-      request.headers.headers
-        .collectFirst { case (CONTENT_TYPE, contentType) =>
-          contentType
-        }
-        .fold(MimeTypes.BINARY)(identity)
-    )
+    given BodyWritable[ByteString] =
+      BodyWritable(bytes => InMemoryBody(bytes), requestContentType)
 
     val http: URL => RequestBuilder = request.method match {
       case "GET"  => httpClient.get(_).setHeader(headers*)
       case "POST" =>
-        httpClient
-          .post(_: URL)
-          .withBody[String](bodyString.fold("")(identity))
-          .setHeader(headers*)
+        url =>
+          httpClient
+            .post(url)
+            .withBody[ByteString](body)
+            .setHeader(headers*)
+
       case "PUT" =>
-        httpClient
-          .put(_)
-          .withBody[String](bodyString.fold("")(identity))
-          .setHeader(headers*)
+        url =>
+          httpClient
+            .put(url)
+            .withBody[ByteString](body)
+            .setHeader(headers*)
+
       case "HEAD" => httpClient.head(_).setHeader(headers*)
     }
 
     val queryString = Option(request.rawQueryString).filter(_.nonEmpty).fold("")(qs => s"?$qs")
     val targetUrl   = s"${appConfig.backendBaseUrl}/${URLDecoder.decode(path, StandardCharsets.UTF_8)}$queryString"
     http(url"$targetUrl")
-      .execute[HttpResponse]
+      .stream[HttpResponse]
       .map(response =>
-        Status(response.status)(response.body).as(response.header(CONTENT_TYPE).fold(MimeTypes.BINARY)(identity))
+        Status(response.status)
+          .chunked(response.bodyAsSource)
+          .as(response.header(CONTENT_TYPE).fold(MimeTypes.BINARY)(identity))
       )
   }
 
