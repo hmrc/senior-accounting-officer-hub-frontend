@@ -1,2 +1,70 @@
-service.name = senior-accounting-officer-hub-frontend
-service.text = Dyma'ch gwasanaeth newydd
+service.name = Hysbysiad a thystysgrif yr Uwch-swyddog Cyfrifyddu
+site.govuk = GOV.UK
+error.title.prefix = Error:
+
+noEnrollment.title = You do not have access to this service
+noEnrollment.heading = You do not have access to this service
+noEnrollment.paragraph1 = You need to {0} to access this page.
+noEnrollment.register.linkText = register to submit a Senior Accounting Officer notification and certificate service
+
+hub.dashboard.title = Hysbysiad a thystysgrif yr Uwch-swyddog Cyfrifyddu
+hub.dashboard.heading = Hysbysiad a thystysgrif yr Uwch-swyddog Cyfrifyddu
+hub.dashboard.subheading1 = Dewch o hyd i dempled cyflwyno
+hub.dashboard.subheading2 = Gwnewch gyflwyniad
+hub.dashboard.paragraph1 = ID y cyfeirnod: {0}
+hub.dashboard.paragraph2 = Lawrlwythwch dempled i baratoi’ch cyflwyniad a darllen arweiniad ar sut i gwblhau a chyflwyno’r templed.
+hub.dashboard.paragraph3 = Gallwch ddechrau cyflwyniad newydd. Cyflwynwch hysbysiad neu dystysgrif.
+hub.dashboard.paragraph.combined = You can start a new submission. Submit a notification, a certificate, or both at the same time.
+
+hub.dashboard.companyDetailsTable.row.companyName.label = Company name
+hub.dashboard.companyDetailsTable.row.referenceId.label = ReferenceID
+hub.dashboard.companyDetailsTable.row.accountingPeriod.label = Accounting period
+hub.dashboard.companyDetailsTable.row.accountingPeriod.to = to
+
+hub.dashboard.notificationDetails.section.heading = Notification
+hub.dashboard.notificationDetails.section.row.status.label = Status
+hub.dashboard.notificationDetails.section.row.status.due = DUE
+hub.dashboard.notificationDetails.section.row.dueDate.label = Due date
+hub.dashboard.notificationDetails.section.row.template.label = Template
+hub.dashboard.notificationDetails.section.row.link.download.text = Download
+hub.dashboard.notificationDetails.section.row.link.notificationTemplate.hiddenText = the notification template
+hub.dashboard.notificationDetails.section.row.templateGuidance.label = Template guidance
+hub.dashboard.notificationDetails.section.row.link.read = Read
+hub.dashboard.notificationDetails.section.row.link.notificationTemplateGuidance.hiddenText = the notification template guidance
+hub.dashboard.notificationDetails.section.row.submissionHistory.label = Submission history
+hub.dashboard.notificationDetails.section.row.link.notPresentYet = Not present yet
+
+hub.dashboard.link.submitNotification.text = Submit a notification
+hub.dashboard.link.submitCertificate.text = Submit a certificate
+
+hub.dashboard.certificationDetails.section.heading = Certification
+hub.dashboard.certificationDetails.section.row.status.label = Status
+hub.dashboard.certificationDetails.section.row.status.due = DUE
+hub.dashboard.certificationDetails.section.row.dueDate.label = Due date
+hub.dashboard.certificationDetails.section.row.template.label = Template
+hub.dashboard.certificationDetails.section.row.link.download.text = Download
+hub.dashboard.certificationDetails.section.row.link.certificationTemplate.hiddenText = the certification template
+hub.dashboard.certificationDetails.section.row.templateGuidance.label = Template guidance
+hub.dashboard.certificationDetails.section.row.link.read = Read
+hub.dashboard.certificationDetails.section.row.link.certificationTemplateGuidance.hiddenText = the certification template guidance
+hub.dashboard.certificationDetails.section.row.submissionHistory.label = Submission history
+hub.dashboard.certificationDetails.section.row.link.notPresentYet = Not present yet
+
+hub.dashboard.link.manageContactDetails.text = Manage contact details
+hub.dashboard.link.manageCompanyDetails.text = Manage company details
+
+pageNotFound.title = Error: Page not found
+pageNotFound.heading = Page not found
+pageNotFound.paragraph1 = If you typed the web address, check it is correct.
+pageNotFound.paragraph2 = If you pasted the web address, check you copied the entire address.
+pageNotFound.paragraph3WithLink = If the web address is correct or you selected a link or button, contact your Customer Compliance Manager (CCM) if you have one, or email <a href="mailto:wmbc.saomailbox@hmrc.gov.uk" class="govuk-link">wmbc.saomailbox@hmrc.gov.uk</a> for support.
+
+unexpectedError.title = Error: Sorry, there is a problem with the service
+unexpectedError.heading = Sorry, there is a problem with the service
+unexpectedError.paragraph1 = Try again later.
+unexpectedError.paragraph2WithLink = Contact your Customer Compliance Manager (CCM) if you have one, or email <a href="mailto:wmbc.saomailbox@hmrc.gov.uk" class="govuk-link">wmbc.saomailbox@hmrc.gov.uk</a> for support.
+
+betaBanner.tag = Beta
+betaBanner.paragraph = Gwasanaeth newydd yw hwn. Rydym yn dal i fod yn gweithio ar ffyrdd i’w wella.
+
+service.text = Dyma’ch gwasanaeth newydd
